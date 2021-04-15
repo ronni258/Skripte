@@ -41,6 +41,54 @@ origin=[gps_Breitengrad_t00(1,1) gps_Laengengrad_t00(1,1) gps_Hoehe_t00(1,1)];
 y = yNorth(1,1:int:anzahl); %gps_Breitengrad_t00(1,1:int:anzahl);
 x = xEast(1,1:int:anzahl);%gps_Laengengrad_t00(1,1:int:anzahl);
 
+% Passt die Entfernung des Fahrzeugs zur Linie an. Wird normalerweise keine
+% Linie erkannt, wo wird die Entfernung auf 0 gesetzt --> das führt zu
+% Fehlern bei der Berechnung der Spurbreite, Querablage... . Um das zu
+% verhindern soll die Entfernung auf "NaN" gesetzt werden, wenn die
+% Wahrscheinlichkeit für einer Markierung
+% (fas_kamera_bv1_LIN_01_ExistMass_t00) < 0,6 ist UND der Abstand innerhalb
+% von 5 Messpunkten auch 0 erreicht. So werden gewollte Spurüberquerungen
+% bei denen der Abstand = 0 ist nicht gelöscht und außerdem auch Passagen
+% bei denen die Wahrscheinlichkeit 0 ist, aber trotzdem eine Linie erkannt
+% wird und der Abstand ~= 0 ist toleriert
+
+for c=1:anzahl
+    if c < anzahl-10 && c > 10 %sorgt dafür, dass bei "n+5" nicht über den maximalen Rand nach Werten gesucht wird
+        if fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c+5)==0 || fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c-5)==0 %
+   fas_kamera_bv1_LIN_01_AbstandY_t00(1,c)=NaN;
+        end
+        
+    elseif c < 10
+        if fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c+5)==0 || fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c)==0 %
+   fas_kamera_bv1_LIN_01_AbstandY_t00(1,c)=NaN;
+        end
+        
+    else
+        if fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c)==0 || fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c-5)==0
+   fas_kamera_bv1_LIN_01_AbstandY_t00(1,c)=NaN;
+        end 
+    end
+end
+
+for c=1:anzahl
+    if c < anzahl-10 && c > 10 %sorgt dafür, dass bei "n+5" nicht über den maximalen Rand nach Werten gesucht wird
+        if fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c+5)==0 || fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c-5)==0 %
+   fas_kamera_bv1_LIN_02_AbstandY_t00(1,c)=NaN;
+        end
+        
+     elseif c < 10
+        if fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c+5)==0 || fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c)==0 %
+   fas_kamera_bv1_LIN_02_AbstandY_t00(1,c)=NaN;
+        end
+        
+    else
+        if fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c)==0 || fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c-5)==0
+   fas_kamera_bv1_LIN_02_AbstandY_t00(1,c)=NaN;
+        end 
+    end
+end
+
+
 
 Start = 1;       %Startwert der Punkte
 Ende=size(x,2);  %Endwert der Punkte
@@ -213,10 +261,10 @@ end
 
 %% stellt auf der Z-Achse die Krümmung dar
 plot3(xEast(1,1:int:anzahl),yNorth(1,1:int:anzahl),1:int:anzahl,'MarkerSize',2,'MarkerFaceColor',[1 0 0],'Color','black');
-% plot3(xEast(1,1:int:anzahl),yNorth(1,1:int:anzahl),fzg_ypp_t00(1:int:anzahl),'MarkerSize',2,'MarkerFaceColor',[1 0 0],'Color','black');
+% plot3(xEast(1,1:int:anzahl),yNorth(1,1:int:anzahl),Lenkradwinkel(1:int:anzahl),'MarkerSize',2,'MarkerFaceColor',[1 0 0],'Color','black');
 
 
-daspect([1 1 10000000])
+daspect([1 1 1000000])
 pbaspect([16 9 9])
 hold off
 
@@ -350,12 +398,20 @@ end
 
 
 % Messpunkt der maximalen Querablage
+if isnan(Ergebnis01_kM(22,1))
+    Ergebnis01_kM(28,1)=NaN;
+else
 Ergebnis01_kM(28,1)=find(((abs(fas_kamera_bv1_LIN_02_AbstandY_t00(1:Ergebnis01_kM(4,1)*int))-fas_kamera_bv1_LIN_01_AbstandY_t00(1:Ergebnis01_kM(4,1)*int))/2)==Ergebnis01_kM(22,1),1,'first');
-%Spurbreite bei Kurvenbeginn
-Ergebnis01_kM(35,1)=round(mean(Sb(1:50)),1);
+end
+%Spurbreite bei Kurvenbeginn (Durchschnitt aus Umfeld von 5-10 Punkten)
+Ergebnis01_kM(35,1)=round(mean(Sb(1:5)),1);
 for c=2:size(Ergebnis01_kM,2)
+if isnan(Ergebnis01_kM(22,c))
+    Ergebnis01_kM(28,c)=NaN;
+else
 Ergebnis01_kM(28,c)=(find(((abs(fas_kamera_bv1_LIN_02_AbstandY_t00(Ergebnis01_kM(4,c-1)*int:Ergebnis01_kM(4,c)*int))-fas_kamera_bv1_LIN_01_AbstandY_t00(Ergebnis01_kM(4,c-1)*int:Ergebnis01_kM(4,c)*int))/2)==Ergebnis01_kM(22,c),1,'first')+Ergebnis01_kM(4,c-1)*int);
-Ergebnis01_kM(35,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+1)*10-50:(Ergebnis01_kM(4,c-1)+1)*10+50)),1);
+end
+Ergebnis01_kM(35,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+1)*10-5:(Ergebnis01_kM(4,c-1)+1)*10+5)),1);
 end
 
 for c=1:size(Ergebnis01_kM,2)
@@ -363,14 +419,16 @@ for c=1:size(Ergebnis01_kM,2)
 Ergebnis01_kM(16,c)=Ergebnis01_kM(8,c)/Ergebnis01_kM(14,c);
 
 %Spurbreite bei maximaler Querablage
-if  Ergebnis01_kM(28,c)+50 <= anzahl
-    if Ergebnis01_kM(28,c)<=50
-        Ergebnis01_kM(36,c)=round(mean(Sb(Ergebnis01_kM(28,c):Ergebnis01_kM(28,c)+50)),1);
+if isnan(Ergebnis01_kM(28,c))
+    Ergebnis01_kM(36,c)=NaN;
+elseif  Ergebnis01_kM(28,c)+5 <= anzahl
+    if Ergebnis01_kM(28,c)<=5
+        Ergebnis01_kM(36,c)=round(mean(Sb(Ergebnis01_kM(28,c):Ergebnis01_kM(28,c)+5)),1);
     else
-        Ergebnis01_kM(36,c)=round(mean(Sb(Ergebnis01_kM(28,c)-50:Ergebnis01_kM(28,c)+50)),1);
+        Ergebnis01_kM(36,c)=round(mean(Sb(Ergebnis01_kM(28,c)-5:Ergebnis01_kM(28,c)+5)),1);
     end
 else
-    Ergebnis01_kM(36,c)=round(mean(Sb(Ergebnis01_kM(28,c)-50:anzahl)),1);    
+    Ergebnis01_kM(36,c)=round(mean(Sb(Ergebnis01_kM(28,c)-5:anzahl)),1);    
 end
 
 %Normierte maximale Querablage auf Spurbreite    
@@ -382,6 +440,12 @@ Ergebnis01_kM(25,c)=Ergebnis01_kM(24,c)/Ergebnis01_kM(35,c);
 %Kurvenschneidefaktor
 Ergebnis01_kM(26,c)=Ergebnis01_kM(23,c)-Ergebnis01_kM(25,c); 
 
+if isnan(Ergebnis01_kM(28,c))
+    Ergebnis01_kM(29,c)=NaN;
+    Ergebnis01_kM(30,c)=NaN;
+    Ergebnis01_kM(33,c)=NaN;
+else
+
 %Querbeschleunigung bei der maximalen Querablage
 Ergebnis01_kM(29,c)=(fzg_ypp_t00_average(1,Ergebnis01_kM(28,c)));
 
@@ -390,7 +454,7 @@ Ergebnis01_kM(30,c)=fas_kamera_bv1_LIN_1_2_HorKruemm_t00_average(1,Ergebnis01_kM
 
 %Verhaeltnis der Bereichsstrecke zum Umfang des Radius-Kreises (Indikator ob es sich um eine Gerade handeln koennte)
 Ergebnis01_kM(33,c)=Ergebnis01_kM(10,c)/(2*pi*Ergebnis01_kM(3,c));
-
+end
 end
 
 
