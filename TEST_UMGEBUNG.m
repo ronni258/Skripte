@@ -259,5 +259,256 @@ for c=2:size(Ergebnis01_kM,2)
 end
 
 
+%Betrachtung der Spurbreite
+c=17;
+int=10;
+figure
+hold
+yline(0)
+% plot(((abs(fas_kamera_bv1_LIN_02_AbstandY_t00(1,Ergebnis01_kM(4,c-1)*int:Ergebnis01_kM(4,c)*int))-fas_kamera_bv1_LIN_01_AbstandY_t00(1,Ergebnis01_kM(4,c-1)*int:Ergebnis01_kM(4,c)*int))/2))
+% plot(fas_kamera_bv1_LIN_02_AbstandY_t00(1,Ergebnis01_kM(4,c-1)*int:Ergebnis01_kM(4,c)*int))
+% plot(fas_kamera_bv1_LIN_01_AbstandY_t00(1,Ergebnis01_kM(4,c-1)*int:Ergebnis01_kM(4,c)*int))
+plot(fas_kamera_bv1_LIN_02_AbstandY_t00)
+plot(fas_kamera_bv1_LIN_01_AbstandY_t00)
+
+round(mean(Sb(1,(Ergebnis01_kM(4,c-1)*int):(Ergebnis01_kM(4,c)*int))),1);
+Sb(1,65597)
 
 
+
+
+%Lenkwinkel und Lenkgeschwindigkeit
+
+for n=1:size(lenk_delta_H_vz_t00,2)
+    if lenk_delta_H_vz_t00(1,n)>0
+      Lenkradwinkel(1,n)= (-1)*lenk_delta_H_t00(1,n);
+    else
+      Lenkradwinkel(1,n)= lenk_delta_H_t00(1,n); 
+    end
+end
+
+for n=1:size(lenk_delta_H_vz_t00,2)
+    if lenk_delta_H_p_vz_t00(1,n)>0
+      Lenkradwinkelgeschw(1,n)= (-1)*lenk_delta_H_p_t00(1,n);
+    else
+      Lenkradwinkelgeschw(1,n)= lenk_delta_H_p_t00(1,n); 
+    end
+end
+% plot(Lenkradwinkelgeschw);
+figure
+hold
+yyaxis left
+plot(Lenkradwinkel);
+% plot(Lenkradwinkelgeschw,'color','green');
+
+yyaxis right
+plot(fas_kamera_bv1_LIN_1_2_HorKruemm_t00_average);
+
+
+%Existenzwahrscheinlichkeit der Fahrbahnmarkierungen
+figure
+ax(1)=subplot(2,1,1);
+hold on
+plot(fas_kamera_bv1_LIN_01_ExistMass_t00)
+plot(fas_kamera_bv1_LIN_02_ExistMass_t00)
+hold off
+ax(2)=subplot(2,1,2);
+hold on
+plot(fas_kamera_bv1_LIN_01_AbstandY_t00)
+plot(fas_kamera_bv1_LIN_02_AbstandY_t00)
+hold off
+
+
+% figure
+fig_1=figure ('Name','Abstand_Markierung+Existenzwahrscheinlichkeit_unbearbeitet');
+title ('Abstand zwischen Fahrzeug und Markierung + Existenzwahrscheinlichkeit')
+subtitle('unbearbeitet')
+hold on
+yyaxis left
+plot(fas_kamera_bv1_LIN_01_AbstandY_t00)
+ylabel ('Abstand')
+yyaxis right
+plot(fas_kamera_bv1_LIN_01_ExistMass_t00)
+xlabel ('Messpunkte')
+ylabel ('Wahrscheinlichkeit')
+legend ('Abstand','Wahrscheinlichkeit')
+
+
+% Passt die Entfernung des Fahrzeugs zur Linie an. Wird normalerweise keine
+% Linie erkannt, wo wird die Entfernung auf 0 gesetzt --> das führt zu
+% Fehlern bei der Berechnung der Spurbreite, Querablage... . Um das zu
+% verhindern soll die Entfernung auf "NaN" gesetzt werden, wenn die
+% Wahrscheinlichkeit für einer Markierung
+% (fas_kamera_bv1_LIN_01_ExistMass_t00) < 0,6 ist UND der Abstand innerhalb
+% von 5 Messpunkten auch 0 erreicht. So werden gewollte Spurüberquerungen
+% bei denen der Abstand = 0 ist nicht gelöscht und außerdem auch Passagen
+% bei denen die Wahrscheinlichkeit 0 ist, aber trotzdem eine Linie erkannt
+% wird und der Abstand ~= 0 ist toleriert
+
+for n=1:anzahl
+    if n < anzahl-10 %sorgt dafür, dass bei "n+5" nicht über den maximalen Rand nach Werten gesucht wird
+        if fas_kamera_bv1_LIN_01_ExistMass_t00(1,n) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,n+5)==0 || fas_kamera_bv1_LIN_01_ExistMass_t00(1,n) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,n-5)==0 %
+   fas_kamera_bv1_LIN_01_AbstandY_t00(1,n)=NaN;
+        end
+    else
+        if fas_kamera_bv1_LIN_01_ExistMass_t00(1,n) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,n)==0 || fas_kamera_bv1_LIN_01_ExistMass_t00(1,n) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,n-5)==0
+   fas_kamera_bv1_LIN_01_AbstandY_t00(1,n)=NaN;
+        end 
+    end
+end
+
+for n=1:anzahl
+    if n < anzahl-10 %sorgt dafür, dass bei "n+5" nicht über den maximalen Rand nach Werten gesucht wird
+        if fas_kamera_bv1_LIN_02_ExistMass_t00(1,n) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,n+5)==0 || fas_kamera_bv1_LIN_02_ExistMass_t00(1,n) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,n-5)==0 %
+   fas_kamera_bv1_LIN_02_AbstandY_t00(1,n)=NaN;
+        end
+    else
+        if fas_kamera_bv1_LIN_02_ExistMass_t00(1,n) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,n)==0 || fas_kamera_bv1_LIN_02_ExistMass_t00(1,n) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,n-5)==0
+   fas_kamera_bv1_LIN_02_AbstandY_t00(1,n)=NaN;
+        end 
+    end
+end
+
+
+
+
+%%%%%%% Pro Kurve sechs Punkte für Geschwindigkeit, Querbeschleunigung und
+%%%%%%% Querablage Spurbreite
+
+%Spurbreite
+for c=1:size(Ergebnis01_kM,2)
+if c > 1
+  Pkt_b=(Ergebnis01_kM(4,c)-Ergebnis01_kM(4,c-1));
+    if Ergebnis01_kM(4,c)*10+5<anzahl
+    Ergebnis01_kM(37,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+0.2*Pkt_b)*10-5:(Ergebnis01_kM(4,c-1)+0.2*Pkt_b)*10+5)),1);
+    Ergebnis01_kM(38,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+0.4*Pkt_b)*10-5:(Ergebnis01_kM(4,c-1)+0.4*Pkt_b)*10+5)),1);
+    Ergebnis01_kM(39,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+0.6*Pkt_b)*10-5:(Ergebnis01_kM(4,c-1)+0.6*Pkt_b)*10+5)),1);
+    Ergebnis01_kM(40,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+0.8*Pkt_b)*10-5:(Ergebnis01_kM(4,c-1)+0.8*Pkt_b)*10+5)),1);
+    Ergebnis01_kM(41,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+1.0*Pkt_b)*10-5:(Ergebnis01_kM(4,c-1)+1.0*Pkt_b)*10+5)),1);
+    else
+    Ergebnis01_kM(37,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+0.2*Pkt_b)*10-5:(Ergebnis01_kM(4,c-1)+0.2*Pkt_b)*10)),1);
+    Ergebnis01_kM(38,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+0.4*Pkt_b)*10-5:(Ergebnis01_kM(4,c-1)+0.4*Pkt_b)*10)),1);
+    Ergebnis01_kM(39,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+0.6*Pkt_b)*10-5:(Ergebnis01_kM(4,c-1)+0.6*Pkt_b)*10)),1);
+    Ergebnis01_kM(40,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+0.8*Pkt_b)*10-5:(Ergebnis01_kM(4,c-1)+0.8*Pkt_b)*10)),1);
+    Ergebnis01_kM(41,c)=round(mean(Sb((Ergebnis01_kM(4,c-1)+1.0*Pkt_b)*10-5:(Ergebnis01_kM(4,c-1)+1.0*Pkt_b)*10)),1);
+    end 
+  
+  
+else
+  Pkt_b=Ergebnis01_kM(4,c);  
+
+    if Ergebnis01_kM(4,c)*10+5<anzahl
+    Ergebnis01_kM(37,c)=round(mean(Sb((Ergebnis01_kM(4,c)+0.2*Pkt_b)*10-5:(Ergebnis01_kM(4,c)+0.2*Pkt_b)*10+5)),1);
+    Ergebnis01_kM(38,c)=round(mean(Sb((Ergebnis01_kM(4,c)+0.4*Pkt_b)*10-5:(Ergebnis01_kM(4,c)+0.4*Pkt_b)*10+5)),1);
+    Ergebnis01_kM(39,c)=round(mean(Sb((Ergebnis01_kM(4,c)+0.6*Pkt_b)*10-5:(Ergebnis01_kM(4,c)+0.6*Pkt_b)*10+5)),1);
+    Ergebnis01_kM(40,c)=round(mean(Sb((Ergebnis01_kM(4,c)+0.8*Pkt_b)*10-5:(Ergebnis01_kM(4,c)+0.8*Pkt_b)*10+5)),1);
+    Ergebnis01_kM(41,c)=round(mean(Sb((Ergebnis01_kM(4,c)+1.0*Pkt_b)*10-5:(Ergebnis01_kM(4,c)+1.0*Pkt_b)*10+5)),1);
+    else
+    Ergebnis01_kM(37,c)=round(mean(Sb((Ergebnis01_kM(4,c)+0.2*Pkt_b)*10-5:(Ergebnis01_kM(4,c)+0.2*Pkt_b)*10)),1);
+    Ergebnis01_kM(38,c)=round(mean(Sb((Ergebnis01_kM(4,c)+0.4*Pkt_b)*10-5:(Ergebnis01_kM(4,c)+0.4*Pkt_b)*10)),1);
+    Ergebnis01_kM(39,c)=round(mean(Sb((Ergebnis01_kM(4,c)+0.6*Pkt_b)*10-5:(Ergebnis01_kM(4,c)+0.6*Pkt_b)*10)),1);
+    Ergebnis01_kM(40,c)=round(mean(Sb((Ergebnis01_kM(4,c)+0.8*Pkt_b)*10-5:(Ergebnis01_kM(4,c)+0.8*Pkt_b)*10)),1);
+    Ergebnis01_kM(41,c)=round(mean(Sb((Ergebnis01_kM(4,c)+1.0*Pkt_b)*10-5:(Ergebnis01_kM(4,c)+1.0*Pkt_b)*10)),1);
+    end
+end
+end
+
+%loescht die Kruemmung an den Stellen, an den keine Linie erkannt wird
+for n=1:size(fas_kamera_bv1_LIN_01_AbstandY_t00,2)
+if isnan(fas_kamera_bv1_LIN_01_AbstandY_t00(1,n))
+    fas_kamera_bv1_LIN_01_HorKruemm_t00(1,n)=NaN;
+end
+
+if isnan(fas_kamera_bv1_LIN_02_AbstandY_t00(1,n))
+    fas_kamera_bv1_LIN_02_HorKruemm_t00(1,n)=NaN;
+end
+end
+
+%bildet Durchschnitt der Kruemmung und fuellt Luecken auf, wenn eine Linie
+%erkannt wird Linie 01 hat weniger Luecken, deshalb wird falls diese
+%vorhanden ist, diese verwendet
+
+for n=1:anzahl
+if isnan(fas_kamera_bv1_LIN_01_HorKruemm_t00(1,n)) && isnan(fas_kamera_bv1_LIN_02_HorKruemm_t00(1,n))
+    fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1,n)=NaN; %%%%%% Name muss im Hauptskript noch angepasst werden
+
+elseif isnan(fas_kamera_bv1_LIN_01_HorKruemm_t00(1,n)) && ~isnan(fas_kamera_bv1_LIN_02_HorKruemm_t00(1,n))
+    fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1,n)=fas_kamera_bv1_LIN_02_HorKruemm_t00(1,n);
+
+elseif isnan(fas_kamera_bv1_LIN_02_HorKruemm_t00(1,n)) && ~isnan(fas_kamera_bv1_LIN_01_HorKruemm_t00(1,n))
+    fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1,n)=fas_kamera_bv1_LIN_01_HorKruemm_t00(1,n);
+
+elseif ~isnan(fas_kamera_bv1_LIN_01_HorKruemm_t00(1,n)) && ~isnan(fas_kamera_bv1_LIN_02_HorKruemm_t00(1,n))
+    fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1,n)=(fas_kamera_bv1_LIN_01_HorKruemm_t00(1,n));%+fas_kamera_bv1_LIN_02_HorKruemm_t00(1,n))/2;
+end
+
+end
+
+%smoothen kann nicht verwendet werden, da bei Bereichen mit NaN sich der
+%Plot dann aufschwingt
+%fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00_smoothed=smooth(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00,10);
+
+% Peaks der Kruemmung suchen --> daraus spaeter den Radius bilden
+[pks_max,locs_max,w_max,p_max]=findpeaks(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00,'MinPeakProminence',0.0005,'Annotate','extents','MinPeakDistance',500,'MinPeakHeight',0.0002,'WidthReference','halfheight','MinPeakWidth',20);
+[pks_min,locs_min,w_min,p_min]=findpeaks((-1)*fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00,'MinPeakProminence',0.0005,'Annotate','extents','MinPeakDistance',500,'MinPeakHeight',0.0002,'WidthReference','halfheight','MinPeakWidth',20);
+
+
+
+figure
+hold on
+% yyaxis left
+% plot(fas_kamera_bv1_LIN_01_ExistMass_t00,'-b')
+% plot(fas_kamera_bv1_LIN_02_ExistMass_t00,'-k')
+% yline(0)
+% yyaxis right
+% plot(fas_kamera_bv1_LIN_01_AbstandY_t00,'-r')
+% plot(fas_kamera_bv1_LIN_02_AbstandY_t00,'-m')
+% yline(0)
+% plot((fas_kamera_bv1_LIN_02_HorKruemm_t00+fas_kamera_bv1_LIN_01_HorKruemm_t00)/2,'-y')
+yline (0,'Color','black')
+plot(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00)
+findpeaks(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00,'MinPeakProminence',0.0002,'MinPeakDistance',500,'MinPeakHeight',0.0002,'WidthReference','halfheight','MinPeakWidth',20)
+findpeaks((-1)*fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00,'MinPeakProminence',0.0002,'MinPeakDistance',500,'MinPeakHeight',0.0002,'WidthReference','halfheight','MinPeakWidth',20)
+
+hold off
+%markiert Extrema auf Durchfahrt
+scatter(xEast(Extrema(:,2)),yNorth(Extrema(:,2)),20,'blue','filled')
+%markiert Extrema auf Kruemmung
+scatter(Extrema(:,2),Extrema(:,1).*Extrema(:,3),20,'blue','filled')
+
+%sortiert die Peaks in eine Matrix
+Extrema=[pks_max -pks_min; locs_max locs_min]';
+Extrema=sortrows(Extrema,2);
+
+%markiert alle Kruemmungsextrema die aufgrund fehlender Spurmarkierungen erkannt
+%worden sind als nicht relevant
+Bereich=50;
+for n=1:size(Extrema,1)
+    if Extrema(n,2)>Bereich && Extrema(n,2)<anzahl-Bereich
+            if isnan(mean(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2)-Bereich:Extrema(n,2)+Bereich)))
+                Extrema(n,3)=0;
+            else
+                Extrema(n,3)=1;
+            end
+    elseif Extrema(n,2)<Bereich
+            if isnan(mean(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):Extrema(n,2)+Bereich)))
+                Extrema(n,3)=0;
+            else
+                Extrema(n,3)=1;
+            end
+
+    elseif Extrema(n,2)>anzahl-Bereich
+            if isnan(mean(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2)-Bereich:anzahl)))
+                Extrema(n,3)=0;
+            else
+                Extrema(n,3)=1;
+            end            
+    
+    end
+end
+
+sum(Extrema(:,3))
+
+0.031250000000000
+
+Extrema(:,4)=(1./Extrema(:,1)).*Extrema(:,3);
