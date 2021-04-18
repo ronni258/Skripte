@@ -473,8 +473,8 @@ findpeaks((-1)*fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00,'MinPeakProminence
 hold off
 %markiert Extrema auf Durchfahrt
 scatter(xEast(Extrema(:,2)),yNorth(Extrema(:,2)),20,'blue','filled')
-%markiert Extrema auf Kruemmung
-scatter(Extrema(:,2),Extrema(:,1).*Extrema(:,3),20,'blue','filled')
+%markiert gueltige Extrema auf Kruemmungsverlauf
+scatter(Extrema_final(:,1),1./(Extrema_final(:,2)),20,'blue','filled')
 
 %sortiert die Peaks in eine Matrix
 Extrema=[pks_max -pks_min; locs_max locs_min]';
@@ -509,6 +509,8 @@ end
 
 sum(Extrema(:,3))
 
-0.031250000000000
+% Wert der bei einer Durchfahrt als Extrema der Kruemmung angenommen wurde. 
+% Gucken ob sich dieser noch in anderen Faellen wiederholt, falls das der Fall ist dann diesen Wert ausschließen
+% 0.031250000000000
 
 Extrema(:,4)=(1./Extrema(:,1)).*Extrema(:,3);
