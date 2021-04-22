@@ -514,3 +514,58 @@ sum(Extrema(:,3))
 % 0.031250000000000
 
 Extrema(:,4)=(1./Extrema(:,1)).*Extrema(:,3);
+
+
+
+
+% Linienabstände zur Verdeutlichung von Spurwechseln
+fig_1=figure ('Name','Abstaende der Fahrbahnmarkierungen / Spurwechsel');
+title ('Abstaende der Fahrbahnmarkierungen')
+subtitle('und Spurwechsel')
+grid on
+hold on
+plot(fas_kamera_bv1_LIN_01_AbstandY_t00)%fas_kamera_bv1_LIN_01_AbstandY_t00)
+plot(fas_kamera_bv1_LIN_02_AbstandY_t00)%fas_kamera_bv1_LIN_02_AbstandY_t00)
+yline(0)
+% plot(Ergebnis_Linkskurve_0100_0150,yfit)
+xlabel ('Messpunkte')
+ylabel ('Abstaende quer zur Fahrtrichtung')
+legend ('linke Spurmarkierung','rechte Spurmarkierung')
+hold off
+
+n=8
+for n=1:size(Ergebnis_Kr,2)
+hold on
+XY=[x(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n));y(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n))];
+
+Kp=1000; % Kp= Kreispunkte
+phi=linspace(0,2*pi,Kp);
+xm=x(Ergebnis_Kr(1,n)); % X-Wert Mittelpunkt
+ym=y(Ergebnis_Kr(1,n)); % Y_Wert Mittelpunkt
+rw=Ergebnis_Kr(2,n);  % Radius
+x_KO=xm+rw*sin(phi); % KO = Kreis Original
+y_KO=ym+rw*cos(phi);
+% plot(x_KO,y_KO)
+XY_KO=[x_KO;y_KO];
+
+for i=1:Kp
+    for j=1:size(XY,2)
+     Mp_Diff(1,i)=sum(abs(sqrt((XY_KO(1,i)-XY(1,j))^2+(XY_KO(2,i)-XY(2,j))^2)-Ergebnis_Kr(2,n)));
+    end
+end
+
+if Ergebnis_Kr(2,n)>0
+Mp=find(Mp_Diff==min(Mp_Diff(0.5*Kp:Kp)));
+else
+Mp=find(Mp_Diff==min(Mp_Diff(0:0.5*Kp)));
+end
+
+phi=linspace(0,2*pi,100);
+xm=x_KO(1,Mp); % X-Wert Mittelpunkt
+ym=y_KO(1,Mp); % Y_Wert Mittelpunkt
+rw=Ergebnis_Kr(2,n);  % Radius
+x_KO=xm+rw*sin(phi); % KO = Kreis Original
+y_KO=ym+rw*cos(phi);
+plot(x_KO,y_KO)
+
+end

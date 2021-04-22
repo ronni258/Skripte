@@ -1,7 +1,7 @@
-FileList = dir(fullfile('C:\Eigene Dateien\Stefan\Masterarbeit\05_Datenauswertung\Auswerteskripte\Curvefitting', 'Ergebnis01*.mat'));  % List of all MAT files
+FileList = dir(fullfile('F:\Eigene Dateien\01_Tu Braunschweig\IfF\Masterarbeit\05_Datenauswertung\Auswerteskripte\Curvefitting\Skripte', 'Ergebnis01*.mat'));  % List of all MAT files
 allData  = struct();
 for iFile = 1:numel(FileList)               % Loop over found files
-  Data   = load(fullfile('C:\Eigene Dateien\Stefan\Masterarbeit\05_Datenauswertung\Auswerteskripte\Curvefitting', FileList(iFile).name));
+  Data   = load(fullfile('F:\Eigene Dateien\01_Tu Braunschweig\IfF\Masterarbeit\05_Datenauswertung\Auswerteskripte\Curvefitting\Skripte', FileList(iFile).name));
   Fields = fieldnames(Data);
   for iField = 1:numel(Fields)              % Loop over fields of current file
     aField = Fields{iField};
@@ -20,4 +20,4 @@ for iFile = 1:numel(FileList)               % Loop over found files
     end
   end
 end
-save(fullfile('C:\Eigene Dateien\Stefan\Masterarbeit\05_Datenauswertung\Auswerteskripte\Curvefitting', 'AllData.mat'), '-struct', 'allData');
+save(fullfile('F:\Eigene Dateien\01_Tu Braunschweig\IfF\Masterarbeit\05_Datenauswertung\Auswerteskripte\Curvefitting\Skripte', 'AllData_Radienfehlerterm.mat'), '-struct', 'allData');

@@ -42,9 +42,9 @@ title ('Kurvenschneiderfaktor ueber normierten Offset zu Kurvenbeginn')
 subtitle('Kurvenradius 100-150m')
 grid on
 hold on
-scatter(Ergebnis_Linkskurve_0100_0150(:,25),Ergebnis_Linkskurve_0100_0150(:,26),10,'blue','filled')
-scatter(Ergebnis_Rechtskurve_0100_0150(:,25),Ergebnis_Rechtskurve_0100_0150(:,26),10,'red','filled')
-% plot(Ergebnis_Linkskurve_0100_0150,yfit)
+scatter(Ergebnis_Linkskurve_Radienfehlerterm_0100_0150(:,25),Ergebnis_Linkskurve_Radienfehlerterm_0100_0150(:,26),10,'blue','filled')
+scatter(Ergebnis_Rechtskurve_Radienfehlerterm_0100_0150(:,25),Ergebnis_Rechtskurve_Radienfehlerterm_0100_0150(:,26),10,'red','filled')
+% plot(Ergebnis_Linkskurve_Radienfehlerterm_0100_0150,yfit)
 xlabel ('normiertet Offset zur Kurvenbeginn')
 ylabel ('Kurvenschneidefaktor')
 legend ('Linkskurve','Rechtskurve')
@@ -56,8 +56,8 @@ title ('Normierte maximale Querablage ueber Querbeschleunigung an der Stelle')
 subtitle('Kurvenradius 100-150m')
 grid on
 hold on 
-scatter(Ergebnis_Linkskurve_0100_0150(:,29),Ergebnis_Linkskurve_0100_0150(:,23),10,'blue','filled')
-scatter(Ergebnis_Rechtskurve_0100_0150(:,29),Ergebnis_Rechtskurve_0100_0150(:,23),10,'red','filled')
+scatter(Ergebnis_Linkskurve_Radienfehlerterm_0100_0150(:,29),Ergebnis_Linkskurve_Radienfehlerterm_0100_0150(:,23),10,'blue','filled')
+scatter(Ergebnis_Rechtskurve_Radienfehlerterm_0100_0150(:,29),Ergebnis_Rechtskurve_Radienfehlerterm_0100_0150(:,23),10,'red','filled')
 xlabel ('Querbeschleunigung')
 ylabel ('normierte maximale Querablage')
 legend ('Linkskurve','Rechtskurve')
@@ -69,8 +69,8 @@ title ('Normierte maximale Querablage ueber normiertem Offset')
 subtitle('Kurvenradius 100-150m')
 grid on
 hold on 
-scatter(Ergebnis_Linkskurve_0100_0150(:,25),Ergebnis_Linkskurve_0100_0150(:,23),10,'blue','filled')
-scatter(Ergebnis_Rechtskurve_0100_0150(:,25),Ergebnis_Rechtskurve_0100_0150(:,23),10,'red','filled')
+scatter(Ergebnis_Linkskurve_Radienfehlerterm_0100_0150(:,25),Ergebnis_Linkskurve_Radienfehlerterm_0100_0150(:,23),10,'blue','filled')
+scatter(Ergebnis_Rechtskurve_Radienfehlerterm_0100_0150(:,25),Ergebnis_Rechtskurve_Radienfehlerterm_0100_0150(:,23),10,'red','filled')
 xlabel ('normiertet Offset zur Kurvenbeginn')
 ylabel ('normierte maximale Querablage')
 legend ('Linkskurve','Rechtskurve')
@@ -81,13 +81,13 @@ title ('Normierte maximale Querablage ueber Durchschnittsgeschwindigkeit')
 subtitle('Kurvenradius 100-150m')
 grid on
 hold on 
-scatter(Ergebnis_Linkskurve_0100_0150(:,14),Ergebnis_Linkskurve_0100_0150(:,23),10,'blue','filled')
-scatter(Ergebnis_Rechtskurve_0100_0150(:,14),Ergebnis_Rechtskurve_0100_0150(:,23),10,'red','filled')
+scatter(Ergebnis_Linkskurve_Radienfehlerterm_0100_0150(:,14),Ergebnis_Linkskurve_Radienfehlerterm_0100_0150(:,23),10,'blue','filled')
+scatter(Ergebnis_Rechtskurve_Radienfehlerterm_0100_0150(:,14),Ergebnis_Rechtskurve_Radienfehlerterm_0100_0150(:,23),10,'red','filled')
 xlabel ('durchschnittliche Geschwindigkeit')
 ylabel ('normierte maximale Querablage')
 legend ('Linkskurve','Rechtskurve')
 hold off
 
-% regression=polyfit(Ergebnis_Linkskurve_0100_0150(:,29),Ergebnis_Linkskurve_0100_0150(:,23),1)
-% yfit = polyval(regression,Ergebnis_Linkskurve_0100_0150)
+% regression=polyfit(Ergebnis_Linkskurve_Radienfehlerterm_0100_0150(:,29),Ergebnis_Linkskurve_Radienfehlerterm_0100_0150(:,23),1)
+% yfit = polyval(regression,Ergebnis_Linkskurve_Radienfehlerterm_0100_0150)
 

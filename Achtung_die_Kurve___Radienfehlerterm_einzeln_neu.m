@@ -1,4 +1,4 @@
-% 
+
 % failedFiles={};
 % FileList = dir(fullfile('F:\Messdaten\040_Volkswagen_Passat_WOB_OQ_616\Landstraße', '*.mat'));  % List of all MAT files
 % allData  = struct();
@@ -20,7 +20,7 @@ int=10; % Schrittweite zwischen zwei Messpunkten
 %loest das Problem, dass durch nur jeden 10ten Punkt (durch Schrittweite
 %festgelegt), der wieder anschließenden Multiplikation und dem Startpunkt
 %einer Schleife bei "1" und nicht bei "0" ein Punkt entsteht der nicht
-%existiert: Es gibt 90002 Punkte / 10 --> Es werden 9000 beginnend Punkte abgelaufen, geginnend bei 1 und dann alle 10
+%existiert: Es gibt 90002 Punkte / 10 --> Es werden 9000 beginnend Punkte abgelaufen, beginnend bei 1 und dann alle 10
 %Punkte --> der letzte Punkt waere also bei 9001 das * 10 = 90010 obwohl
 %nur 90002 Punkte vorhanden
 anzahl=fix(size(gps_Laengengrad_t00,2)/100)*100;
@@ -41,52 +41,7 @@ origin=[gps_Breitengrad_t00(1,1) gps_Laengengrad_t00(1,1) gps_Hoehe_t00(1,1)];
 y = yNorth(1,1:int:anzahl); %gps_Breitengrad_t00(1,1:int:anzahl);
 x = xEast(1,1:int:anzahl);%gps_Laengengrad_t00(1,1:int:anzahl);
 
-% Passt die Entfernung des Fahrzeugs zur Linie an. Wird normalerweise keine
-% Linie erkannt, wo wird die Entfernung auf 0 gesetzt --> das führt zu
-% Fehlern bei der Berechnung der Spurbreite, Querablage... . Um das zu
-% verhindern soll die Entfernung auf "NaN" gesetzt werden, wenn die
-% Wahrscheinlichkeit für einer Markierung
-% (fas_kamera_bv1_LIN_01_ExistMass_t00) < 0,6 ist UND der Abstand innerhalb
-% von 5 Messpunkten auch 0 erreicht. So werden gewollte Spurüberquerungen
-% bei denen der Abstand = 0 ist nicht gelöscht und außerdem auch Passagen
-% bei denen die Wahrscheinlichkeit 0 ist, aber trotzdem eine Linie erkannt
-% wird und der Abstand ~= 0 ist toleriert
 
-for c=1:anzahl
-    if c < anzahl-10 && c > 10 %sorgt dafür, dass bei "n+5" nicht über den maximalen Rand nach Werten gesucht wird
-        if fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c+5)==0 || fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c-5)==0 %
-   fas_kamera_bv1_LIN_01_AbstandY_t00(1,c)=NaN;
-        end
-        
-    elseif c < 10
-        if fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c+5)==0 || fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c)==0 %
-   fas_kamera_bv1_LIN_01_AbstandY_t00(1,c)=NaN;
-        end
-        
-    else
-        if fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c)==0 || fas_kamera_bv1_LIN_01_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_01_AbstandY_t00(1,c-5)==0
-   fas_kamera_bv1_LIN_01_AbstandY_t00(1,c)=NaN;
-        end 
-    end
-end
-
-for c=1:anzahl
-    if c < anzahl-10 && c > 10 %sorgt dafür, dass bei "n+5" nicht über den maximalen Rand nach Werten gesucht wird
-        if fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c+5)==0 || fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c-5)==0 %
-   fas_kamera_bv1_LIN_02_AbstandY_t00(1,c)=NaN;
-        end
-        
-     elseif c < 10
-        if fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c+5)==0 || fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c)==0 %
-   fas_kamera_bv1_LIN_02_AbstandY_t00(1,c)=NaN;
-        end
-        
-    else
-        if fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c)==0 || fas_kamera_bv1_LIN_02_ExistMass_t00(1,c) < 0.6 && fas_kamera_bv1_LIN_02_AbstandY_t00(1,c-5)==0
-   fas_kamera_bv1_LIN_02_AbstandY_t00(1,c)=NaN;
-        end 
-    end
-end
 
 
 
