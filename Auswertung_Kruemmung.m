@@ -109,7 +109,7 @@ ylabel ('normierte maximale Querablage')
 legend ('Linkskurve','Rechtskurve')
 hold off
 
-% maximale Querablage über normiertem Offset
+% normierte maximale Querablage über normiertem Offset
 fig_3=figure ('Name','Qab_max_norm/Offset_norm_0100_0150');
 title ('Normierte maximale Querablage ueber normiertem Offset')
 subtitle('Kurvenradius 100-150m')
@@ -124,6 +124,7 @@ ylabel ('normierte maximale Querablage')
 legend ('Linkskurve','Rechtskurve')
 hold off
 
+% normierte maximale Querablage über Durchschnittsgeschwindigkeit
 fig_4=figure ('Name','Qab_max_norm/v_durchschnitt_0100_0150');
 title ('Normierte maximale Querablage ueber Durchschnittsgeschwindigkeit')
 subtitle('Kurvenradius 100-150m')
@@ -138,6 +139,31 @@ ylabel ('normierte maximale Querablage')
 legend ('Linkskurve','Rechtskurve')
 hold off
 
-% regression=polyfit(Ergebnis_Linkskurve_0100_0150(:,29),Ergebnis_Linkskurve_0100_0150(:,23),1)
-% yfit = polyval(regression,Ergebnis_Linkskurve_0100_0150)
+
+
+% Querbeschleunigung ueber Kurvenlaenge
+fig_5=figure ('Name','Verlauf Querbeschleunigung/Kurvenlänge');
+for n=1:size(Ergebnis_Kr,2)
+Zsm=sortrows([Ergebnis_Kr(79:85,n),Ergebnis_Kr(96:102,n)],1);%Zwischenspeichermatrix um die maximale Querlage mit einzureihen
+Zsm2=sortrows([Ergebnis_Kr(5:11,n)-Ergebnis_Kr(5,n),Ergebnis_Kr(56:62,n)],1);
+title ('Verlauf Querbeschleunigung ueber Kurvenlänge')
+subtitle('Kurvenradius 100-150m')
+grid on
+hold on 
+ax(1)=subplot(2,1,1);
+hold on
+xlabel ('Kurvenlaenge')
+ylabel ('Querbeschleunigung')
+plot(Zsm(:,1),Zsm(:,2))
+hold off
+ax(2)=subplot(2,1,2);
+hold on
+plot(Zsm2(:,1),Zsm2(:,2))
+xlabel ('Messpunkte')
+ylabel ('Querbeschleunigung')
+% legend ('Linkskurve','Rechtskurve')
+hold off
+
+end
+
 

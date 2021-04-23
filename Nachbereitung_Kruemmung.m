@@ -1,3 +1,7 @@
+%Dieses Skript loescht als erstes alle Passagen, die aufgrund mangelnder
+%Daten unbrauchbar sind, unterscheidet im Anschluss zwischen Links- und
+%Rechtskurven und teilt diese in Gruppen abhaengig ihrer Radien ein
+
 %% Legende Ergebnis_Kr
 % 01.   Messpunkt des minimalen Radius/maximalen Kruemmung der Gesamtkurve
 % 02.   minimaler Radius der Gesamtkurve [m] (kleinster Radius definiert die Kurve)  
@@ -82,8 +86,8 @@
  
   
 % zusammengefuegte Daten transponieren, damit "sortrows" funktioniert
-Ergebnis_Matrix=Ergebnis_Kr'; % dieses fuer den Fall verwenden, dass man die AllData aus dem abgespeicherten Workspace laedt und nicht direkt im Workspace hat 
-% Ergebnis_Matrix=allData.Ergebnis_Kr';
+% Ergebnis_Matrix=Ergebnis_Kr'; % dieses fuer den Fall verwenden, dass man die AllData aus dem abgespeicherten Workspace laedt und nicht direkt im Workspace hat 
+Ergebnis_Matrix=allData.Ergebnis_Kr';
 Ergebnis_Matrix_sortiert=sortrows(Ergebnis_Matrix,40);
 % Ergebnis_Matrix_sortiert=sortrows(Ergebnis_Matrix_sortiert,3);
  
@@ -124,6 +128,7 @@ for n=1:size(Ergebnis_Matrix_sortiert,1)
     
 end
 
+%Unterteilung in Links- und Rechtskurven
 i=1;
 j=1;
 for n=1:size(Ergebnis_Matrix_sortiert,1)
@@ -140,6 +145,7 @@ for n=1:size(Ergebnis_Matrix_sortiert,1)
 end
 j=[];
 i=[];
+
 % loescht alle leeren Zeilen
 Ergebnis_Matrix_sortiert=Ergebnis_Matrix_sortiert(~all(Ergebnis_Matrix_sortiert == 0, 2),:);
 
@@ -150,6 +156,7 @@ r=1; s=1; t=1; u=1; v=1; w=1; x=1; y=1; z=1; ii=1; jj=1; kk=1; ll=1; mm=1; oo=1;
 pp=1; qq=1; rr=1; ss=1; tt=1; uu=1; vv=1; ww=1; xx=1; yy=1; zz=1; aa=1; bb=1; cc=1;
 dd=1; ee=1;
 
+% Unterteilung in Radienbereiche
 
 for n=1:size(Ergebnis_Rechtskurve,1)
     if abs(abs(Ergebnis_Rechtskurve(n,2)))>50 && abs(Ergebnis_Rechtskurve(n,2))<=100
@@ -378,6 +385,7 @@ for n=1:size(Ergebnis_Rechtskurve,1)
     end     
 end
 
+
 %% Linkskurve
 
 a=1; b=1; c=1; d=1; e=1; f=1; g=1; h=1; i=1; j=1; k=1; l=1; m=1; o=1; p=1; q=1;
@@ -385,6 +393,7 @@ r=1; s=1; t=1; u=1; v=1; w=1; x=1; y=1; z=1; ii=1; jj=1; kk=1; ll=1; mm=1; oo=1;
 pp=1; qq=1; rr=1; ss=1; tt=1; uu=1; vv=1; ww=1; xx=1; yy=1; zz=1; aa=1; bb=1; cc=1;
 dd=1; ee=1;
 
+% Unterteilung in Radienbereiche
 
 for n=1:size(Ergebnis_Linkskurve,1)
     if Ergebnis_Linkskurve(n,2)>50 && Ergebnis_Linkskurve(n,2)<=100

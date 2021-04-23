@@ -1,14 +1,14 @@
-%%% Dieses Skript errechnet anhand der durch die Kamera erkannten
+%%% Dieses Skript rechnet anhand der durch die Kamera erkannten
 %%% Kruemmungen der linken und rechten Fahrspurmarkierungen den Bereich der
 %%% Kurven und deren Radien aus
 
 anzahl=fix(size(fas_kamera_bv1_LIN_01_AbstandY_t00,2)/100)*100;
 
 % Passt die Entfernung des Fahrzeugs zur Linie an. Wird normalerweise keine
-% Linie erkannt, wo wird die Entfernung auf 0 gesetzt --> das führt zu
+% Linie erkannt, so wird die Entfernung auf 0 gesetzt --> das führt zu
 % Fehlern bei der Berechnung der Spurbreite, Querablage... . Um das zu
 % verhindern soll die Entfernung auf "NaN" gesetzt werden, wenn die
-% Wahrscheinlichkeit für einer Markierung
+% Wahrscheinlichkeit für die Existenz einer Markierung
 % (fas_kamera_bv1_LIN_01_ExistMass_t00) < 0,6 (60%) ist UND der Abstand innerhalb
 % von 5 Messpunkten auch 0 erreicht. So werden gewollte Spurüberquerungen
 % bei denen der Abstand = 0 ist nicht gelöscht und außerdem auch Passagen
@@ -87,14 +87,13 @@ end
 
 
 
-% Peaks der Kruemmung suchen --> daraus spaeter den Radius bilden
+% Peaks der Kruemmung suchen --> daraus spaeter den Radius bilden, da diese
+% Kruemmungspeaks die Kurve definieren
 
 [pks_max,locs_max,w_max,p_max]=findpeaks(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00,'MinPeakProminence',0.0002,'Annotate','extents','MinPeakDistance',200,'MinPeakHeight',0.0002,'WidthReference','halfheight','MinPeakWidth',20);
 [pks_min,locs_min,w_min,p_min]=findpeaks((-1)*fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00,'MinPeakProminence',0.0002,'Annotate','extents','MinPeakDistance',200,'MinPeakHeight',0.0002,'WidthReference','halfheight','MinPeakWidth',20);
 
 %sortiert die Peaks in eine Matrix
-% 01.   Kruemmung am Extrema
-% 02.   Messpunkt beim Extrema
 Extrema=[pks_max -pks_min; locs_max locs_min]';
 Extrema=sortrows(Extrema,2);
 
@@ -133,13 +132,13 @@ end
 Extrema(Extrema(:,3)==0,:)=[];
 
 
-% 04.   Kurvenradius aus dem Kehrwert der Kruemmung
+%Kurvenradius aus dem Kehrwert der Kruemmung
 Extrema(:,4)=(1./Extrema(:,1));
 
 
 % sucht den Kurvenbeginn und das Kurvenende jedes Kruemmungsextrema. Sollte
 % es sich um eine verschachtelte Kurve handeln und somit die Kruemmung nach
-% einem Extrema nicht auf ~ 0 (bzw. innerhalb des Toleranzbereichs) "abfallen" wird das naechste Extrema betrachtet, um
+% einem Extrema nicht auf ca. 0 (bzw. innerhalb des Toleranzbereichs) "abfallen" wird das naechste Extrema betrachtet, um
 % somit das Gesamtkurvenende zu bestimmen
 
 Tb=0.0001;  %Toleranzbereich der Kruemmung, lauft die Kruemmung in diesen Bereich wird sie als "Gerade" angenommen, 
@@ -182,7 +181,7 @@ end
 
 
 
-% 07.   Messpunkt Kurvenende (wenn hier eine "0" steht, bedeutet dass, das die Kurve mit der nachfolgenden Kurve ein Teil einer Gesamtkurve mit mehreren Radien bildet)
+% 07.   Messpunkt Kurvenende (wenn hier eine "0" steht, bedeutet das, dass die Kurve mit der nachfolgenden Kurve ein Teil einer Gesamtkurve mit mehreren Radien bildet)
 for n=1:size(Extrema,1)
  try
      if n==1
@@ -271,7 +270,8 @@ end
 
 % Messpunkte des minimalen Radius/maximalen Kruemmung der Gesamtkurve
 % werdem rausgesucht (im Fall dass es mehrmals den exakt gleichen
-% Radius gibt, wird an der Stelle eine "0" hinterlegt)
+% Radius gibt, wird an der Stelle eine "0" hinterlegt) und im naechsten
+% Abschnitt korrigiert
 for n=1:size(Extrema_final,1)
   try
     Extrema_final(n,1)=Extrema(Extrema(:,4)==Extrema_final(n,2),2);
@@ -283,7 +283,7 @@ end
 
 %fuellt die Luecken in der Spalte der Messpunkte der minimalen
 %Radien/maximalen Kruemmung auf, indem die mehrmals exakt gleichen Radien
-%und deren Messpunkte betrachtet werden und mit den umliegenden Messpunkten
+%und deren Messpunkte betrachtet und mit den jeweils umliegenden Messpunkten
 %der bereits einsortierten Radien verglichen werden.
 for n=1:size(Extrema_final,1)
     if Extrema_final(n,1)==0

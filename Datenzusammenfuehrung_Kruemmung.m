@@ -1,3 +1,10 @@
+% Dieses Skript sucht sich alle einzelnen Ergebnis-Matrizen, die am definierten Speicherort dem
+% festgelegten Namen entsprechen und fuegt die zu einem "struct" zusammen
+% mit dem Namen "allData". Zusaetzlich wird die zusammengefuehrte
+% Ergebnismatrix unter dem Namen "AddData_Kruemmung" als .mat-File abgespeichert
+
+
+
 FileList = dir(fullfile('F:\Eigene Dateien\01_Tu Braunschweig\IfF\Masterarbeit\05_Datenauswertung\Auswerteskripte\Curvefitting\Skripte', 'Ergebnis_Kr*.mat'));  % List of all MAT files
 allData  = struct();
 for iFile = 1:numel(FileList)               % Loop over found files
@@ -8,13 +15,6 @@ for iFile = 1:numel(FileList)               % Loop over found files
     if isfield(allData, aField)             % Attach new data:
        allData.(aField) = [allData.(aField), Data.(aField)];
        
-       % [EDITED]
-       % The orientation depends on the sizes of the fields. There is no
-       % general method here, so maybe it is needed to concatenate 
-       % vertically:
-       % allData.(aField) = [allData.(aField); Data.(aField)];
-       % Or in general with suiting value for [dim]:
-       % allData.(aField) = cat(dim, allData.(aField), Data.(aField));
     else
        allData.(aField) = Data.(aField);
     end
