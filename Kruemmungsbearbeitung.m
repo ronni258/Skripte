@@ -87,14 +87,13 @@ end
 
 
 
-% Peaks der Kruemmung suchen --> daraus spaeter den Radius bilden
+% Peaks der Kruemmung suchen --> daraus spaeter den Radius bilden, da diese
+% Kruemmungspeaks die Kurve definieren
 
 [pks_max,locs_max,w_max,p_max]=findpeaks(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00,'MinPeakProminence',0.0002,'Annotate','extents','MinPeakDistance',200,'MinPeakHeight',0.0002,'WidthReference','halfheight','MinPeakWidth',20);
 [pks_min,locs_min,w_min,p_min]=findpeaks((-1)*fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00,'MinPeakProminence',0.0002,'Annotate','extents','MinPeakDistance',200,'MinPeakHeight',0.0002,'WidthReference','halfheight','MinPeakWidth',20);
 
 %sortiert die Peaks in eine Matrix
-% 01.   Kruemmung am Extrema
-% 02.   Messpunkt beim Extrema
 Extrema=[pks_max -pks_min; locs_max locs_min]';
 Extrema=sortrows(Extrema,2);
 
@@ -262,11 +261,11 @@ Extrema_final(:,10)=Extrema_01(:,3);     % Messpunkt des Kurvenendes
 % 08.   Messpunkt bei 0.6 der Kurve
 % 09.   Messpunkt bei 0.8 der Kurve
 for n=1:size(Extrema_final,1)
-    Kb=Extrema_final(n,10)-Extrema_final(n,5); %Kb = Kurvenbereich
-    Extrema_final(n,6)=round(Kb*0.2+Extrema_final(n,5));
-    Extrema_final(n,7)=round(Kb*0.4+Extrema_final(n,5));
-    Extrema_final(n,8)=round(Kb*0.6+Extrema_final(n,5));
-    Extrema_final(n,9)=round(Kb*0.8+Extrema_final(n,5));
+      Kl=Data.fzg_x_t00(Extrema_final(n,10))-Data.fzg_x_t00(Extrema_final(n,5)); %Kl = Kurvenlänge
+      Extrema_final(n,6)=find(Data.fzg_x_t00>Data.fzg_x_t00(Extrema_final(n,5))+(Kl*0.1),1,'first');
+      Extrema_final(n,7)=find(Data.fzg_x_t00>Data.fzg_x_t00(Extrema_final(n,5))+(Kl*0.3),1,'first');
+      Extrema_final(n,8)=find(Data.fzg_x_t00>Data.fzg_x_t00(Extrema_final(n,5))+(Kl*0.5),1,'first');
+      Extrema_final(n,9)=find(Data.fzg_x_t00>Data.fzg_x_t00(Extrema_final(n,5))+(Kl*0.7),1,'first');
 end
 
 % Messpunkte des minimalen Radius/maximalen Kruemmung der Gesamtkurve
@@ -316,10 +315,10 @@ Ergebnis_Kr=Extrema_final';
 % 03.   0
 % 04.   0
 % 05.   Messpunkt des Kurvenbeginns
-% 06.   Messpunkt bei 0.2 der Kurve
-% 07.   Messpunkt bei 0.4 der Kurve
-% 08.   Messpunkt bei 0.6 der Kurve
-% 09.   Messpunkt bei 0.8 der Kurve
+% 06.   Messpunkt bei 0.1 der Kurve (Distanz)
+% 07.   Messpunkt bei 0.3 der Kurve (Distanz)
+% 08.   Messpunkt bei 0.5 der Kurve (Distanz)
+% 09.   Messpunkt bei 0.7 der Kurve (Distanz)
 % 10.   Messpunkt des Kurvenendes
 
 

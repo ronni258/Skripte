@@ -256,21 +256,21 @@ Extrema_final(:,2)=Extrema_01(:,2);     % minimaler Radius der Gesamtkurve
 Extrema_final(:,5)=Extrema_01(:,1);     % Messpunkt des Kurvenbeginns
 Extrema_final(:,10)=Extrema_01(:,3);     % Messpunkt des Kurvenendes
 
-% 06.   Messpunkt bei 0.2 der Kurve
-% 07.   Messpunkt bei 0.4 der Kurve
-% 08.   Messpunkt bei 0.6 der Kurve
-% 09.   Messpunkt bei 0.8 der Kurve
+% 06.   Messpunkt bei 0.1 der Kurve
+% 07.   Messpunkt bei 0.3 der Kurve
+% 08.   Messpunkt bei 0.5 der Kurve
+% 09.   Messpunkt bei 0.7 der Kurve
 for n=1:size(Extrema_final,1)
-    Kb=Extrema_final(n,10)-Extrema_final(n,5); %Kb = Kurvenbereich
-    Extrema_final(n,6)=round(Kb*0.2+Extrema_final(n,5));
-    Extrema_final(n,7)=round(Kb*0.4+Extrema_final(n,5));
-    Extrema_final(n,8)=round(Kb*0.6+Extrema_final(n,5));
-    Extrema_final(n,9)=round(Kb*0.8+Extrema_final(n,5));
+      Kl=fzg_x_t00(Extrema_final(n,10))-fzg_x_t00(Extrema_final(n,5)); %Kl = Kurvenlänge
+      Extrema_final(n,6)=find(fzg_x_t00>fzg_x_t00(Extrema_final(n,5))+(Kl*0.1),1,'first');
+      Extrema_final(n,7)=find(fzg_x_t00>fzg_x_t00(Extrema_final(n,5))+(Kl*0.3),1,'first');
+      Extrema_final(n,8)=find(fzg_x_t00>fzg_x_t00(Extrema_final(n,5))+(Kl*0.5),1,'first');
+      Extrema_final(n,9)=find(fzg_x_t00>fzg_x_t00(Extrema_final(n,5))+(Kl*0.7),1,'first');
 end
 
 % Messpunkte des minimalen Radius/maximalen Kruemmung der Gesamtkurve
 % werdem rausgesucht (im Fall dass es mehrmals den exakt gleichen
-% Radius gibt, wird an der Stelle eine "0" hinterlegt) und im naechsten
+% Radius gibt, wird an den Stellen eine "0" hinterlegt) und im naechsten
 % Abschnitt korrigiert
 for n=1:size(Extrema_final,1)
   try
@@ -316,10 +316,10 @@ Ergebnis_Kr=Extrema_final';
 % 03.   0
 % 04.   0
 % 05.   Messpunkt des Kurvenbeginns
-% 06.   Messpunkt bei 0.2 der Kurve
-% 07.   Messpunkt bei 0.4 der Kurve
-% 08.   Messpunkt bei 0.6 der Kurve
-% 09.   Messpunkt bei 0.8 der Kurve
+% 06.   Messpunkt bei 0.1 der Kurve (Distanz)
+% 07.   Messpunkt bei 0.3 der Kurve (Distanz)
+% 08.   Messpunkt bei 0.5 der Kurve (Distanz)
+% 09.   Messpunkt bei 0.7 der Kurve (Distanz)
 % 10.   Messpunkt des Kurvenendes
 
 

@@ -8,19 +8,19 @@
 % 03.   Laenge des Abschnitts [m]
 % 04.   0
 % 05.   Messpunkt bei Kurvenbeginn
-% 06.   Messpunkt bei 0.2 der Kurve
-% 07.   Messpunkt bei 0.4 der Kurve
-% 08.   Messpunkt bei 0.6 der Kurve
-% 09.   Messpunkt bei 0.8 der Kurve
+% 06.   Messpunkt bei 0.1 der Kurve
+% 07.   Messpunkt bei 0.3 der Kurve
+% 08.   Messpunkt bei 0.5 der Kurve
+% 09.   Messpunkt bei 0.7 der Kurve
 % 10.   Messpunkt bei Kurvenende
 % 11.   Messpunkt bei der maximalen Querablage
 % 12.   0
 % 13.   0
 % 14.   Querablage bei Kurvenbeginn
-% 15.   Querablage bei 0.2 der Kurve
-% 16.   Querablage bei 0.4 der Kurve
-% 17.   Querablage bei 0.6 der Kurve
-% 18.   Querablage bei 0.8 der Kurve
+% 15.   Querablage bei 0.1 der Kurve
+% 16.   Querablage bei 0.3 der Kurve
+% 17.   Querablage bei 0.5 der Kurve
+% 18.   Querablage bei 0.7 der Kurve
 % 19.   Querablage bei Kurvenende
 % 20.   maxmimale Querablage
 % 21.   durchschnittliche Querablage
@@ -28,19 +28,19 @@
 % 23.   0
 % 24.   0
 % 25.   Spurbreite bei Kurvenbeginn
-% 26.   Spurbreite bei 0.2 der Kurve
-% 27.   Spurbreite bei 0.4 der Kurve
-% 28.   Spurbreite bei 0.6 der Kurve
-% 29.   Spurbreite bei 0.8 der Kurve
+% 26.   Spurbreite bei 0.1 der Kurve
+% 27.   Spurbreite bei 0.3 der Kurve
+% 28.   Spurbreite bei 0.5 der Kurve
+% 29.   Spurbreite bei 0.7 der Kurve
 % 30.   Spurbreite bei Kurvenende
 % 31.   Spurbreite bei maximaler Querablage
 % 32.   durchschnittliche Spurbreite
 % 33.   0
 % 34.   normierte Querablage bei Kurvenbeginn
-% 35.   normierte Querablage bei 0.2 der Kurve
-% 36.   normierte Querablage bei 0.4 der Kurve
-% 37.   normierte Querablage bei 0.6 der Kurve
-% 38.   normierte Querablage bei 0.8 der Kurve
+% 35.   normierte Querablage bei 0.1 der Kurve
+% 36.   normierte Querablage bei 0.3 der Kurve
+% 37.   normierte Querablage bei 0.5 der Kurve
+% 38.   normierte Querablage bei 0.7 der Kurve
 % 39.   normierte Querablage bei Kurvenende
 % 40.   maxmimale normierte Querablage
 % 41.   durchschnittliche normierte Querablage
@@ -48,10 +48,10 @@
 % 43.   0
 % 44.   0
 % 45.   Kruemmung bei Kurvenbeginn
-% 46.   Kruemmung bei 0.2 der Kurve
-% 47.   Kruemmung bei 0.4 der Kurve
-% 48.   Kruemmung bei 0.6 der Kurve
-% 49.   Kruemmung bei 0.8 der Kurve
+% 46.   Kruemmung bei 0.1 der Kurve
+% 47.   Kruemmung bei 0.3 der Kurve
+% 48.   Kruemmung bei 0.5 der Kurve
+% 49.   Kruemmung bei 0.7 der Kurve
 % 50.   Kruemmung bei Kurvenende
 % 51.   Kruemmung bei maximaler Querablage
 % 52.   maxmimale Kruemmung
@@ -59,10 +59,10 @@
 % 54.   0
 % 55.   0
 % 56.   Querbeschleunigung bei Kurvenbeginn
-% 57.   Querbeschleunigung bei 0.2 der Kurve
-% 58.   Querbeschleunigung bei 0.4 der Kurve
-% 59.   Querbeschleunigung bei 0.6 der Kurve
-% 60.   Querbeschleunigung bei 0.8 der Kurve
+% 57.   Querbeschleunigung bei 0.1 der Kurve
+% 58.   Querbeschleunigung bei 0.3 der Kurve
+% 59.   Querbeschleunigung bei 0.5 der Kurve
+% 60.   Querbeschleunigung bei 0.7 der Kurve
 % 61.   Querbeschleunigung bei Kurvenende
 % 62.   Querbeschleunigung bei maximaler Querablage
 % 63.   maxmimale Querbeschleunigung
@@ -70,10 +70,10 @@
 % 65.   durchschnittliche Querbeschleunigung
 % 66.   0
 % 67.   Geschwindigkeit bei Kurvenbeginn
-% 68.   Geschwindigkeit bei 0.2 der Kurve
-% 69.   Geschwindigkeit bei 0.4 der Kurve
-% 70.   Geschwindigkeit bei 0.6 der Kurve
-% 71.   Geschwindigkeit bei 0.8 der Kurve
+% 68.   Geschwindigkeit bei 0.1 der Kurve
+% 69.   Geschwindigkeit bei 0.3 der Kurve
+% 70.   Geschwindigkeit bei 0.5 der Kurve
+% 71.   Geschwindigkeit bei 0.7 der Kurve
 % 72.   Geschwindigkeit bei Kurvenende
 % 73.   Geschwindigkeit bei maximaler Querablage
 % 74.   maxmimale Geschwindigkeit
@@ -84,10 +84,12 @@
 
  
  
-  
+load('AllData_Kruemmung.mat')  
 % zusammengefuegte Daten transponieren, damit "sortrows" funktioniert
-% Ergebnis_Matrix=Ergebnis_Kr'; % dieses fuer den Fall verwenden, dass man die AllData aus dem abgespeicherten Workspace laedt und nicht direkt im Workspace hat 
-Ergebnis_Matrix=allData.Ergebnis_Kr';
+Ergebnis_Matrix=Ergebnis_Kr'; % dieses fuer den Fall verwenden, dass man die AllData aus dem abgespeicherten Workspace laedt und nicht direkt im Workspace hat 
+
+
+
 Ergebnis_Matrix_sortiert=sortrows(Ergebnis_Matrix,40);
 % Ergebnis_Matrix_sortiert=sortrows(Ergebnis_Matrix_sortiert,3);
  
@@ -112,6 +114,11 @@ for n=1:size(Ergebnis_Matrix_sortiert,1)
     if  isnan(Ergebnis_Matrix_sortiert(n,11)) || isnan(Ergebnis_Matrix_sortiert(n,20)) || isnan(Ergebnis_Matrix_sortiert(n,14))
         Ergebnis_Matrix_sortiert(n,:)=0;
     end    
+
+    %loeschen wenn die Messpunkte  Querablage innerhalb der Kurve == NaN sind
+    if  isnan(Ergebnis_Matrix_sortiert(n,15)) && isnan(Ergebnis_Matrix_sortiert(n,16)) && isnan(Ergebnis_Matrix_sortiert(n,17))
+        Ergebnis_Matrix_sortiert(n,:)=0;
+    end  
     
     %loescht alle Kurven, die entweder bei der maximalen Querablage oder dem Offset zum Kurveneingang einen Wert von ueber 0.47 haben
     % da das Bereiche sind, in denen ein Spurwechsel vollzogen, die eigene Fahrbahn beim durch die Kurve fahren verlassen oder aus Einfahrten auf die Strasse gefahren wurde %
@@ -625,4 +632,77 @@ end
 
 
 clear a aa b bb c cc d dd e ee f g h i ii j jj k kk l ll m mm o oo p pp q qq r rr s ss t tt u uu v vv w ww x xx y yy z zz 
+
+
+
+%% Datenvorbereitung fuer Balkendiagramm zur Haeufigkeitsverteilung der Kurvenradien
+
+Lk_0050_0100=size(Ergebnis_Linkskurve_0050_0100,1);
+Lk_0100_0150=size(Ergebnis_Linkskurve_0100_0150,1);
+Lk_0150_0200=size(Ergebnis_Linkskurve_0150_0200,1);
+Lk_0200_0250=size(Ergebnis_Linkskurve_0200_0250,1);
+Lk_0250_0300=size(Ergebnis_Linkskurve_0250_0300,1);
+Lk_0300_0350=size(Ergebnis_Linkskurve_0300_0350,1);
+Lk_0350_0400=size(Ergebnis_Linkskurve_0350_0400,1);
+Lk_0400_0450=size(Ergebnis_Linkskurve_0400_0450,1);
+Lk_0450_0500=size(Ergebnis_Linkskurve_0450_0500,1);
+Lk_0500_0550=size(Ergebnis_Linkskurve_0500_0550,1);
+Lk_0550_0600=size(Ergebnis_Linkskurve_0550_0600,1);
+Lk_0600_0650=size(Ergebnis_Linkskurve_0600_0650,1);
+Lk_0650_0700=size(Ergebnis_Linkskurve_0650_0700,1);
+Lk_0700_0750=size(Ergebnis_Linkskurve_0700_0750,1);
+Lk_0750_0800=size(Ergebnis_Linkskurve_0750_0800,1);
+Lk_0800_0850=size(Ergebnis_Linkskurve_0800_0850,1);
+Lk_0850_0900=size(Ergebnis_Linkskurve_0850_0900,1);
+Lk_0900_0950=size(Ergebnis_Linkskurve_0900_0950,1);
+Lk_0950_1000=size(Ergebnis_Linkskurve_0950_1000,1);
+Lk_1000_1050=size(Ergebnis_Linkskurve_1000_1050,1);
+Lk_1050_1100=size(Ergebnis_Linkskurve_1050_1100,1);
+Lk_1100_1150=size(Ergebnis_Linkskurve_1100_1150,1);
+Lk_1150_1200=size(Ergebnis_Linkskurve_1150_1200,1);
+Lk_1200_1250=size(Ergebnis_Linkskurve_1200_1250,1);
+Lk_1250_1300=size(Ergebnis_Linkskurve_1250_1300,1);
+Lk_1300_1400=size(Ergebnis_Linkskurve_1300_1400,1);
+Lk_1400_1500=size(Ergebnis_Linkskurve_1400_1500,1);
+Lk_1500_1600=size(Ergebnis_Linkskurve_1500_1600,1);
+Lk_1600_1700=size(Ergebnis_Linkskurve_1600_1700,1);
+Lk_1700_1800=size(Ergebnis_Linkskurve_1700_1800,1);
+Lk_1800_1900=size(Ergebnis_Linkskurve_1800_1900,1);
+Lk_1900_2000=size(Ergebnis_Linkskurve_1900_2000,1);
+
+
+Rk_0050_0100=size(Ergebnis_Rechtskurve_0050_0100,1);
+Rk_0100_0150=size(Ergebnis_Rechtskurve_0100_0150,1);
+Rk_0150_0200=size(Ergebnis_Rechtskurve_0150_0200,1);
+Rk_0200_0250=size(Ergebnis_Rechtskurve_0200_0250,1);
+Rk_0250_0300=size(Ergebnis_Rechtskurve_0250_0300,1);
+Rk_0300_0350=size(Ergebnis_Rechtskurve_0300_0350,1);
+Rk_0350_0400=size(Ergebnis_Rechtskurve_0350_0400,1);
+Rk_0400_0450=size(Ergebnis_Rechtskurve_0400_0450,1);
+Rk_0450_0500=size(Ergebnis_Rechtskurve_0450_0500,1);
+Rk_0500_0550=size(Ergebnis_Rechtskurve_0500_0550,1);
+Rk_0550_0600=size(Ergebnis_Rechtskurve_0550_0600,1);
+Rk_0600_0650=size(Ergebnis_Rechtskurve_0600_0650,1);
+Rk_0650_0700=size(Ergebnis_Rechtskurve_0650_0700,1);
+Rk_0700_0750=size(Ergebnis_Rechtskurve_0700_0750,1);
+Rk_0750_0800=size(Ergebnis_Rechtskurve_0750_0800,1);
+Rk_0800_0850=size(Ergebnis_Rechtskurve_0800_0850,1);
+Rk_0850_0900=size(Ergebnis_Rechtskurve_0850_0900,1);
+Rk_0900_0950=size(Ergebnis_Rechtskurve_0900_0950,1);
+Rk_0950_1000=size(Ergebnis_Rechtskurve_0950_1000,1);
+Rk_1000_1050=size(Ergebnis_Rechtskurve_1000_1050,1);
+Rk_1050_1100=size(Ergebnis_Rechtskurve_1050_1100,1);
+Rk_1100_1150=size(Ergebnis_Rechtskurve_1100_1150,1);
+Rk_1150_1200=size(Ergebnis_Rechtskurve_1150_1200,1);
+Rk_1200_1250=size(Ergebnis_Rechtskurve_1200_1250,1);
+Rk_1250_1300=size(Ergebnis_Rechtskurve_1250_1300,1);
+Rk_1300_1400=size(Ergebnis_Rechtskurve_1300_1400,1);
+Rk_1400_1500=size(Ergebnis_Rechtskurve_1400_1500,1);
+Rk_1500_1600=size(Ergebnis_Rechtskurve_1500_1600,1);
+Rk_1600_1700=size(Ergebnis_Rechtskurve_1600_1700,1);
+Rk_1700_1800=size(Ergebnis_Rechtskurve_1700_1800,1);
+Rk_1800_1900=size(Ergebnis_Rechtskurve_1800_1900,1);
+Rk_1900_2000=size(Ergebnis_Rechtskurve_1900_2000,1);
+
+
 

@@ -90,7 +90,7 @@ end
 % ym=Ergebnis01(2,i); % Y_Wert Mittelpunkt
 % rw=Ergebnis01(3,i);  % Radius
 % x_KO=xm+rw*sin(phi); % KO = Kreis Original
-% y_KO=ym+rw*cos(phi);
+% y_KO=ym+rw*cos(phi);yy
 % plot(x_KO,y_KO)
 %     end
 % end
@@ -103,7 +103,7 @@ end
 plot3(xEast(1,1:int:anzahl),yNorth(1,1:int:anzahl),1:int:anzahl,'MarkerSize',2,'MarkerFaceColor',[1 0 0],'Color','black');
 % plot3(xEast(1,1:int:anzahl),yNorth(1,1:int:anzahl),Lenkradwinkel(1:int:anzahl),'MarkerSize',2,'MarkerFaceColor',[1 0 0],'Color','black');
 
-daspect([1 1 1000000])
+daspect([1 1 100000])
 pbaspect([16 9 9])
 hold off
 
@@ -131,10 +131,10 @@ for n=1:size(Ergebnis_Kr,2)
     
     %%% Querablage
 % 14.   Querablage bei Kurvenbeginn
-% 15.   Querablage bei 0.2 der Kurve
-% 16.   Querablage bei 0.4 der Kurve
-% 17.   Querablage bei 0.6 der Kurve
-% 18.   Querablage bei 0.8 der Kurve
+% 15.   Querablage bei 0.1 der Kurve
+% 16.   Querablage bei 0.3 der Kurve
+% 17.   Querablage bei 0.5 der Kurve
+% 18.   Querablage bei 0.7 der Kurve
 % 19.   Querablage bei Kurvenende
 % 20.   maxmimale Querablage
 % 21.   durchschnittliche Querablage
@@ -163,10 +163,10 @@ for n=1:size(Ergebnis_Kr,2)
 
  
 % 25.   Spurbreite bei Kurvenbeginn
-% 26.   Spurbreite bei 0.2 der Kurve
-% 27.   Spurbreite bei 0.4 der Kurve
-% 28.   Spurbreite bei 0.6 der Kurve
-% 29.   Spurbreite bei 0.8 der Kurve
+% 26.   Spurbreite bei 0.1 der Kurve
+% 27.   Spurbreite bei 0.3 der Kurve
+% 28.   Spurbreite bei 0.5 der Kurve
+% 29.   Spurbreite bei 0.7 der Kurve
 % 30.   Spurbreite bei Kurvenende
 % 31.   Spurbreite bei maximaler Querablage
 % 32.   durchschnittliche Spurbreite  
@@ -190,10 +190,10 @@ for n=1:size(Ergebnis_Kr,2)
 
 
 % 34.   normierte Querablage bei Kurvenbeginn
-% 35.   normierte Querablage bei 0.2 der Kurve
-% 36.   normierte Querablage bei 0.4 der Kurve
-% 37.   normierte Querablage bei 0.6 der Kurve
-% 38.   normierte Querablage bei 0.8 der Kurve
+% 35.   normierte Querablage bei 0.1 der Kurve
+% 36.   normierte Querablage bei 0.3 der Kurve
+% 37.   normierte Querablage bei 0.5 der Kurve
+% 38.   normierte Querablage bei 0.7 der Kurve
 % 39.   normierte Querablage bei Kurvenende
 % 40.   normierte maxmimale Querablage
 % 41.   normierte durchschnittliche Querablage
@@ -212,10 +212,10 @@ for n=1:size(Ergebnis_Kr,2)
         
         
 % 45.   Kruemmung bei Kurvenbeginn
-% 46.   Kruemmung bei 0.2 der Kurve
-% 47.   Kruemmung bei 0.4 der Kurve
-% 48.   Kruemmung bei 0.6 der Kurve
-% 49.   Kruemmung bei 0.8 der Kurve
+% 46.   Kruemmung bei 0.1 der Kurve
+% 47.   Kruemmung bei 0.3 der Kurve
+% 48.   Kruemmung bei 0.5 der Kurve
+% 49.   Kruemmung bei 0.7 der Kurve
 % 50.   Kruemmung bei Kurvenende
 % 51.   Kruemmung bei maximaler Querablage
 % 52.   maxmimale Kruemmung
@@ -238,10 +238,10 @@ for n=1:size(Ergebnis_Kr,2)
         
 
 % 56.   Querbeschleunigung bei Kurvenbeginn
-% 57.   Querbeschleunigung bei 0.2 der Kurve
-% 58.   Querbeschleunigung bei 0.4 der Kurve
-% 59.   Querbeschleunigung bei 0.6 der Kurve
-% 60.   Querbeschleunigung bei 0.8 der Kurve
+% 57.   Querbeschleunigung bei 0.1 der Kurve
+% 58.   Querbeschleunigung bei 0.3 der Kurve
+% 59.   Querbeschleunigung bei 0.5 der Kurve
+% 60.   Querbeschleunigung bei 0.7 der Kurve
 % 61.   Querbeschleunigung bei Kurvenende
 % 62.   Querbeschleunigung bei maximaler Querablage
 % 63.   maxmimale Querbeschleunigung
@@ -266,10 +266,10 @@ for n=1:size(Ergebnis_Kr,2)
         
         
 % 67.   Geschwindigkeit bei Kurvenbeginn
-% 68.   Geschwindigkeit bei 0.2 der Kurve
-% 69.   Geschwindigkeit bei 0.4 der Kurve
-% 70.   Geschwindigkeit bei 0.6 der Kurve
-% 71.   Geschwindigkeit bei 0.8 der Kurve
+% 68.   Geschwindigkeit bei 0.1 der Kurve
+% 69.   Geschwindigkeit bei 0.3 der Kurve
+% 70.   Geschwindigkeit bei 0.5 der Kurve
+% 71.   Geschwindigkeit bei 0.7 der Kurve
 % 72.   Geschwindigkeit bei Kurvenende
 % 73.   Geschwindigkeit bei maximaler Querablage
 % 74.   maxmimale Geschwindigkeit
@@ -344,9 +344,9 @@ for n=1:size(Ergebnis_Kr,2)
     
     
        %%% Querablage
-% 97.   Querablage bei Kurvenbeginn
-% 98.   Querablage bei 0.2 der Kurve
-% 99.   Querablage bei 0.4 der Kurve
+% 97.    Querablage bei Kurvenbeginn
+% 98.    Querablage bei 0.2 der Kurve
+% 99.    Querablage bei 0.4 der Kurve
 % 100.   Querablage bei 0.6 der Kurve
 % 101.   Querablage bei 0.8 der Kurve
 % 102.   Querablage bei Kurvenende
@@ -502,36 +502,48 @@ for n=1:size(Ergebnis_Kr,2)
     end
         Ergebnis_Kr(157,n)=max(fzg_xp_t00(1,(Ergebnis_Kr(88,n)):(Ergebnis_Kr(93,n))));
         Ergebnis_Kr(158,n)=min(fzg_xp_t00(1,(Ergebnis_Kr(88,n)):(Ergebnis_Kr(93,n))));
-        Ergebnis_Kr(159,n)=mean(fzg_xp_t00(1,(Ergebnis_Kr(88,n)):(Ergebnis_Kr(93,n))));    
+        Ergebnis_Kr(159,n)=mean(fzg_xp_t00(1,(Ergebnis_Kr(88,n)):(Ergebnis_Kr(93,n)))); 
+        
+        
+        
+% 162.   realtive Kurvendistanz bei Kurvenbeginn (immer 0)       [m]
+% 163.   realtive Kurvendistanz 0.1 der Kurve (10% der Distanz)  [m]
+% 164.   realtive Kurvendistanz 0.3 der Kurve (30% der Distanz)  [m]
+% 165.   realtive Kurvendistanz 0.5 der Kurve (50% der Distanz)  [m]
+% 166.   realtive Kurvendistanz 0.7 der Kurve (70% der Distanz)  [m]
+% 167.   realtive Kurvendistanz bei Kurvenende
+        
+        Ergebnis_Kr(162,n)=fzg_x_t00(Ergebnis_Kr(5,n))-fzg_x_t00(Ergebnis_Kr(5,n));
+        Ergebnis_Kr(163,n)=Kl*0.1;
+        Ergebnis_Kr(164,n)=Kl*0.3;
+        Ergebnis_Kr(165,n)=Kl*0.5;
+        Ergebnis_Kr(166,n)=Kl*0.7;
+        Ergebnis_Kr(167,n)=fzg_x_t00(Ergebnis_Kr(10,n))-fzg_x_t00(Ergebnis_Kr(5,n));
     
 end
 
 
 %% Legende Ergebnis_Kr
-% Bis 76. beziehen sich die Werte fuer die Punkte bei 0.2, 0.4, 0.6, und
-% 0.8 einer Kurve auf die Anzahl der Messpunkte (sind also
-% geschwindigkeitsabhaengig, da mit 100Hz gemessen wird.
-% Ab 79. werden die gleichen Punkte anhand der zurueckgelgten Distanz
-% innerhalt einer Kurve gemessen, somit sind die Werte streckenabhaengig
+
 
 % 01.   Messpunkt des minimalen Radius/maximalen Kruemmung der Gesamtkurve
 % 02.   minimaler Radius der Gesamtkurve [m] (kleinster Radius definiert die Kurve)  
 % 03.   Laenge des Abschnitts [m]
 % 04.   0
 % 05.   Messpunkt bei Kurvenbeginn
-% 06.   Messpunkt bei 0.2 der Kurve (Messpunkte)
-% 07.   Messpunkt bei 0.4 der Kurve (Messpunkte)
-% 08.   Messpunkt bei 0.6 der Kurve (Messpunkte)
-% 09.   Messpunkt bei 0.8 der Kurve (Messpunkte)
+% 06.   Messpunkt bei 0.1 der Kurve (Distanz)
+% 07.   Messpunkt bei 0.3 der Kurve (Distanz)
+% 08.   Messpunkt bei 0.5 der Kurve (Distanz)
+% 09.   Messpunkt bei 0.7 der Kurve (Distanz)
 % 10.   Messpunkt bei Kurvenende
 % 11.   Messpunkt bei der maximalen Querablage
 % 12.   0
 % 13.   0
 % 14.   Querablage bei Kurvenbeginn  [m]
-% 15.   Querablage bei 0.2 der Kurve (Messpunkte)
-% 16.   Querablage bei 0.4 der Kurve (Messpunkte)
-% 17.   Querablage bei 0.6 der Kurve (Messpunkte)
-% 18.   Querablage bei 0.8 der Kurve (Messpunkte)
+% 15.   Querablage bei 0.1 der Kurve (Distanz)
+% 16.   Querablage bei 0.3 der Kurve (Distanz)
+% 17.   Querablage bei 0.5 der Kurve (Distanz)
+% 18.   Querablage bei 0.7 der Kurve (Distanz)
 % 19.   Querablage bei Kurvenende
 % 20.   maxmimale Querablage
 % 21.   durchschnittliche Querablage
@@ -539,19 +551,19 @@ end
 % 23.   0
 % 24.   0
 % 25.   Spurbreite bei Kurvenbeginn  [m]
-% 26.   Spurbreite bei 0.2 der Kurve (Messpunkte)
-% 27.   Spurbreite bei 0.4 der Kurve (Messpunkte)
-% 28.   Spurbreite bei 0.6 der Kurve (Messpunkte)
-% 29.   Spurbreite bei 0.8 der Kurve (Messpunkte)
+% 26.   Spurbreite bei 0.1 der Kurve (Distanz)
+% 27.   Spurbreite bei 0.3 der Kurve (Distanz)
+% 28.   Spurbreite bei 0.5 der Kurve (Distanz)
+% 29.   Spurbreite bei 0.7 der Kurve (Distanz)
 % 30.   Spurbreite bei Kurvenende
 % 31.   Spurbreite bei maximaler Querablage
 % 32.   durchschnittliche Spurbreite
 % 33.   0
 % 34.   normierte Querablage bei Kurvenbeginn
-% 35.   normierte Querablage bei 0.2 der Kurve (Messpunkte)
-% 36.   normierte Querablage bei 0.4 der Kurve (Messpunkte)
-% 37.   normierte Querablage bei 0.6 der Kurve (Messpunkte)
-% 38.   normierte Querablage bei 0.8 der Kurve (Messpunkte)
+% 35.   normierte Querablage bei 0.1 der Kurve (Distanz)
+% 36.   normierte Querablage bei 0.3 der Kurve (Distanz)
+% 37.   normierte Querablage bei 0.5 der Kurve (Distanz)
+% 38.   normierte Querablage bei 0.7 der Kurve (Distanz)
 % 39.   normierte Querablage bei Kurvenende
 % 40.   maxmimale normierte Querablage
 % 41.   durchschnittliche normierte Querablage
@@ -559,10 +571,10 @@ end
 % 43.   0
 % 44.   0
 % 45.   Kruemmung bei Kurvenbeginn  [1/m]
-% 46.   Kruemmung bei 0.2 der Kurve (Messpunkte)
-% 47.   Kruemmung bei 0.4 der Kurve (Messpunkte)
-% 48.   Kruemmung bei 0.6 der Kurve (Messpunkte)
-% 49.   Kruemmung bei 0.8 der Kurve (Messpunkte)
+% 46.   Kruemmung bei 0.1 der Kurve (Distanz)
+% 47.   Kruemmung bei 0.3 der Kurve (Distanz)
+% 48.   Kruemmung bei 0.5 der Kurve (Distanz)
+% 49.   Kruemmung bei 0.7 der Kurve (Distanz)
 % 50.   Kruemmung bei Kurvenende
 % 51.   Kruemmung bei maximaler Querablage
 % 52.   maxmimale Kruemmung
@@ -570,10 +582,10 @@ end
 % 54.   0
 % 55.   0
 % 56.   Querbeschleunigung bei Kurvenbeginn  [m/s^2]
-% 57.   Querbeschleunigung bei 0.2 der Kurve (Messpunkte)
-% 58.   Querbeschleunigung bei 0.4 der Kurve (Messpunkte)
-% 59.   Querbeschleunigung bei 0.6 der Kurve (Messpunkte)
-% 60.   Querbeschleunigung bei 0.8 der Kurve (Messpunkte)
+% 57.   Querbeschleunigung bei 0.1 der Kurve (Distanz)
+% 58.   Querbeschleunigung bei 0.3 der Kurve (Distanz)
+% 59.   Querbeschleunigung bei 0.5 der Kurve (Distanz)
+% 60.   Querbeschleunigung bei 0.7 der Kurve (Distanz)
 % 61.   Querbeschleunigung bei Kurvenende
 % 62.   Querbeschleunigung bei maximaler Querablage
 % 63.   maxmimale Querbeschleunigung
@@ -581,10 +593,10 @@ end
 % 65.   durchschnittliche Querbeschleunigung
 % 66.   0
 % 67.   Geschwindigkeit bei Kurvenbeginn  [km/h]
-% 68.   Geschwindigkeit bei 0.2 der Kurve (Messpunkte)
-% 69.   Geschwindigkeit bei 0.4 der Kurve (Messpunkte)
-% 70.   Geschwindigkeit bei 0.6 der Kurve (Messpunkte)
-% 71.   Geschwindigkeit bei 0.8 der Kurve (Messpunkte)
+% 68.   Geschwindigkeit bei 0.1 der Kurve (Distanz)
+% 69.   Geschwindigkeit bei 0.3 der Kurve (Distanz)
+% 70.   Geschwindigkeit bei 0.5 der Kurve (Distanz)
+% 71.   Geschwindigkeit bei 0.7 der Kurve (Distanz)
 % 72.   Geschwindigkeit bei Kurvenende
 % 73.   Geschwindigkeit bei maximaler Querablage
 % 74.   maxmimale Geschwindigkeit
@@ -673,3 +685,16 @@ end
 % 157.   maxmimale Geschwindigkeit
 % 158.   minimale Geschwindigkeit
 % 159.   durchschnittliche Geschwindigkeit
+% 160.   0
+% 161.   0
+% 162.   realtive Kurvendistanz bei Kurvenbeginn (immer 0)       [m]
+% 163.   realtive Kurvendistanz 0.2 der Kurve (20% der Distanz)  [m]
+% 164.   realtive Kurvendistanz 0.4 der Kurve (40% der Distanz)  [m]
+% 165.   realtive Kurvendistanz 0.6 der Kurve (60% der Distanz)  [m]
+% 166.   realtive Kurvendistanz 0.8 der Kurve (80% der Distanz)  [m]
+% 167.   realtive Kurvendistanz bei Kurvenende
+
+
+
+
+

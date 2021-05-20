@@ -298,7 +298,7 @@ end
 figure
 hold
 yyaxis left
-plot(Lenkradwinkel);
+plot(Lenkradwinkel(3661:5080));
 % plot(Lenkradwinkelgeschw,'color','green');
 
 yyaxis right
@@ -569,3 +569,182 @@ y_KO=ym+rw*cos(phi);
 plot(x_KO,y_KO)
 
 end
+
+
+
+figure
+hold on
+plot((abs(fas_kamera_bv1_LIN_02_AbstandY_t00(1,(Ergebnis_Kr(5,35):Ergebnis_Kr(10,35))))-fas_kamera_bv1_LIN_01_AbstandY_t00(1,(Ergebnis_Kr(5,35):Ergebnis_Kr(10,35))))/2)
+plot(fzg_ypp_t00_average(Ergebnis_Kr(5,35):Ergebnis_Kr(10,35)))
+
+
+
+
+
+%Curve Cutting Gradient: soll die stationären Punkte der Querbeschleunigung
+%einer Kurve erkennen (Standardabweichung innerhalb von 3 Sekunden ^= 300 Messpunkte
+% geringer als 10%) und an den Stellen die Querablage über die
+%Querbeschleunigung auftragen. Durch alle Punkte eine Regressionsgerade
+%legen: sollte die Steigung der Geraden negativ sein, deutet das auf einen
+%kurvenschneidenen Charakter hin, ist die Steigung positiv driftet das
+%Fahrzeug im Verlauf der Kurve nach außen. Soll als Indikator fuer die
+%Qualitaet einer automatisierten Querfuehrung dienen. Fuer meine Zwecke
+%aber wahrschienlich nicht so wichtig, da dadurch eher ein Fahrstil
+%beschrieben wird und bei den Messdaten aber mehrere Personen gefahren sind
+
+
+CCG=[]
+n=151;
+while n <= 89000 %42201:43846
+    if std(fzg_ypp_t00_average(n-150:n+150))<=fzg_ypp_t00_average(n)*0.1 && ~isnan((abs(fas_kamera_bv1_LIN_02_AbstandY_t00(1,(n)))-fas_kamera_bv1_LIN_01_AbstandY_t00(1,(n)))/2)
+        CCG(:,n)=[fzg_ypp_t00_average(n);(abs(fas_kamera_bv1_LIN_02_AbstandY_t00(1,(n)))-fas_kamera_bv1_LIN_01_AbstandY_t00(1,(n)))/2];
+    n=n+99;
+    end
+    n=n+1;
+end
+
+ CCG2=nonzeros(CCG');
+ CCG2=reshape(CCG2,[],2);
+reg=CCG2(:,1)\CCG2(:,2);
+figure
+hold on
+scatter(CCG2(:,1),CCG2(:,2))
+plot(CCG2(:,1),reg*CCG2(:,1))
+
+CCG=[];
+k=1;
+sw=10;
+for n=1:size(Ergebnis_Kr,2)
+    j=Ergebnis_Kr(5,n)+sw;
+    while j<Ergebnis_Kr(10,n)-sw
+      if std(fzg_ypp_t00_average(j-sw:j+sw))<=fzg_ypp_t00_average(j)*0.1 %&& ~isnan((abs(fas_kamera_bv1_LIN_02_AbstandY_t00(1,(j)))-fas_kamera_bv1_LIN_01_AbstandY_t00(1,(j)))/2)
+        CCG(:,k)=[fzg_ypp_t00_average(j);(abs(fas_kamera_bv1_LIN_02_AbstandY_t00(1,(j)))-fas_kamera_bv1_LIN_01_AbstandY_t00(1,(j)))/2;j];
+        k=k+1;
+        j=j+sw*2;
+      else
+    j=j+1;
+      end
+    end
+end
+        
+ CCG3=CCG';
+reg=CCG3(:,1)\CCG3(:,2);
+figure
+hold on
+scatter(CCG3(:,1),CCG3(:,2))
+plot(CCG3(:,1),reg*CCG3(:,1))        
+
+figure
+hold
+plot(fzg_ypp_t00_average)
+        
+
+
+
+
+
+
+% Plot der Koordinaten die aus dem Schwimmwinkel und Gierwinkel des ESM
+% abgeleitet werden
+figure
+hold on
+% plot(out.x_SP.Data(2000:end),out.y_SP.Data(2000:end))
+% plot(simout.signals.values(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n)-1,1))
+% plot(fzg_ypp_t00_average(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n)))
+yyaxis left
+plot(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n)))
+yyaxis right
+plot((abs(fas_kamera_bv1_LIN_02_AbstandY_t00(1,(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n))))-fas_kamera_bv1_LIN_01_AbstandY_t00(1,(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n))))/2)
+daspect([1 1 100000])
+pbaspect([16 9 9])
+
+hold off 
+
+figure
+hold on
+plot(x(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n))-x(Ergebnis_Kr(5,n)),y(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n))-y(Ergebnis_Kr(5,n)))
+daspect([1 1 100000])
+pbaspect([16 9 9])
+
+%Rotation der Koordinaten der gefahrenen Kurve, um diese mit dem Ergebnis
+%des ESM vergleichen zu können
+x_rot=x*cosd(288)-y*sind(288);
+y_rot=x*sind(288)+y*cosd(288);
+
+figure
+hold on
+plot(x_rot(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n))-x_rot(Ergebnis_Kr(5,n)),y_rot(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n))-y_rot(Ergebnis_Kr(5,n)))
+daspect([1 1 100000])
+pbaspect([16 9 9])
+
+
+
+
+
+
+
+% Versuch Simulink direkt mit dem Kruemmungsvektor zu füttern
+
+
+
+simin_radius.time=allg_t00(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n))';
+simin_radius.signals.values=(1./fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n)))';
+
+simin_v.time=allg_t00(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n))';
+simin_v.signals.values=(fzg_xp_t00(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n)))';
+
+simin_psip.time=allg_t00(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n)-1)';
+simin_psip.signals.values=simout.signals.values(:,2);
+
+simin_beta.time=allg_t00(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n)-1)';
+simin_beta.signals.values=simout.signals.values(:,3);
+
+
+simin_radius.time(:,1)=[(0:0.01:36.59)'; trrte];
+trrte=simin_radius.time;
+simin_radius.time=[];
+
+
+tgb=simin_radius.signals.values;
+simin_radius.signals.values=[];
+simin_radius.signals.values(1:Ergebnis_Kr(10,n),1)=1.005651551356665e+04;
+simin_radius.signals.values(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n),1)=tgb;
+
+simin_v.time=simin_radius.time;
+
+
+gdf=simin_v.signals.values;
+simin_v.signals.values=[];
+simin_v.signals.values(1:Ergebnis_Kr(10,n),1)=47.243720677086350;
+simin_v.signals.values(Ergebnis_Kr(5,n):Ergebnis_Kr(10,n),1)=gdf;
+
+
+simin_radius.time(1,1)
+
+
+
+%Vergleich der Kruemmungsverlaeufe der Curvature Funktion
+XY_qab=[];
+XY_qab=[x_qab y_qab];
+R_smoothed=smooth(R,100)
+
+figure
+hold on
+plot(1./(R_smoothed))
+scatter(1:size(R_smoothed,1),(1./R_smoothed))
+scatter(1:size(R,1),(1./R))
+plot(K_smoothed)
+
+ 
+plot(smooth(K(:,1),50))
+plot(smooth(K(:,2),50))
+scatter(1:size(R_smoothed,1),K(:,1))
+scatter(1:size(R_smoothed,1),K(:,2))
+yline(0)
+
+plot(-K1(2001:end,1))
+plot(x_qab,y_qab)
+
+plot(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1,83173:87395))
+plot(R)
+[L,R,K]=curvature(XY_qab)
