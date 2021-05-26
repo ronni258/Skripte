@@ -128,7 +128,7 @@ end
 %Kruemmung
 figure
 plot((smooth(fas_kamera_bv1_LIN_01_HorKruemm_t00)))
-daspect([1 100 1])
+daspect([1 1 1])
 pbaspect([16 9 9])
 
 Ergebnis01_kM(17,1)=1/(((fas_kamera_bv1_LIN_01_HorKruemm_t00(1,(Ergebnis01_kM(4,1))*int*0.1))+(fas_kamera_bv1_LIN_01_HorKruemm_t00(1,((Ergebnis01_kM(4,1)*int*0.5)))+(fas_kamera_bv1_LIN_01_HorKruemm_t00(1,(Ergebnis01_kM(4,1))*int*0.9))))/3);
@@ -311,11 +311,13 @@ ax(1)=subplot(2,1,1);
 hold on
 plot(fas_kamera_bv1_LIN_01_ExistMass_t00)
 plot(fas_kamera_bv1_LIN_02_ExistMass_t00)
+ylabel ('Existenzwahrscheinlichkeit')
 hold off
 ax(2)=subplot(2,1,2);
 hold on
 plot(fas_kamera_bv1_LIN_01_AbstandY_t00)
 plot(fas_kamera_bv1_LIN_02_AbstandY_t00)
+ylabel ('Abstand')
 hold off
 
 
@@ -465,6 +467,8 @@ hold on
 % plot(fas_kamera_bv1_LIN_02_AbstandY_t00,'-m')
 % yline(0)
 % plot((fas_kamera_bv1_LIN_02_HorKruemm_t00+fas_kamera_bv1_LIN_01_HorKruemm_t00)/2,'-y')
+yline (0.0002,'Color','black')
+yline (-0.0002,'Color','black')
 yline (0,'Color','black')
 plot(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00)
 findpeaks(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00,'MinPeakProminence',0.0002,'MinPeakDistance',500,'MinPeakHeight',0.0002,'WidthReference','halfheight','MinPeakWidth',20)
@@ -748,3 +752,16 @@ plot(x_qab,y_qab)
 plot(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1,83173:87395))
 plot(R)
 [L,R,K]=curvature(XY_qab)
+
+
+% Vergleich der verschiedenen GPS-Daten
+figure  ('Name','Streckenverlauf');
+title ('Streckenverlauf Aufzeichnung: 2019-09-17-20-00-02')
+subtitle(' Vergleich der GPS-Aufzeichnungen')
+hold on
+plot3(fas_navi_ehr_GPS_Latitude_t00,fas_navi_ehr_GPS_Longitude_t00,1:90002,'MarkerSize',2,'MarkerFaceColor',[1 0 0],'Color','black');
+plot3(gps_Breitengrad_t00,gps_Laengengrad_t00,1:90002,'MarkerSize',2,'MarkerFaceColor',[1 0 0],'Color','red');
+xlabel ('Breitengrad')
+ylabel ('Längengrad')
+legend ('internes GPS', 'externes GPS')
+hold off

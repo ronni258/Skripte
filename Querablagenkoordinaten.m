@@ -17,7 +17,8 @@ for i=2000+1:size(x_SP.signals.values,1)-1
 A=[x_SP.signals.values(i-1) y_SP.signals.values(i-1)]; %vorheriger Punkt
 B=[x_SP.signals.values(i+1) y_SP.signals.values(i+1)]; %nachfolgender Punkt
 C=[x_SP.signals.values(i) y_SP.signals.values(i)]; %betrachteter Punkt
-Qabl=(abs(fas_kamera_bv1_LIN_02_AbstandY_t00(1,(Ergebnis_Kr(5,n)-1+j)))-fas_kamera_bv1_LIN_01_AbstandY_t00(1,(Ergebnis_Kr(5,n)-1+j)))/2;
+Qabl=(abs(fas_kamera_bv1_LIN_02_AbstandY_t00(1,(Ergebnis_Kr(5,n)-1+j)))-fas_kamera_bv1_LIN_01_AbstandY_t00(1,(Ergebnis_Kr(5,n)-1+j)))/2; %Querablage als Einzelwert für jeden Punkt
+QablV(i,1)=Qabl; %Vektor der Querablage
 AB = B - A; %Vektor von A zu B
 AB = AB/norm(AB); %normierter Vektor mit einheitslaenge
 ABperp = AB*[0 -1;1 0]; %senkrechter normierter Vektor der auf AB ist mit Einheitslaenge
@@ -55,7 +56,7 @@ if Qabl>0 %Querablage ist links von Spurmitte
             D = ABmid - Qabl_eff*ABperp;
         end
     elseif A(1,1)-B(1,1)==0 && A(1,2)-B(1,2)>0 %konstante x-Koordinate aber fallender y-Wert
-       if (ABmid(1,1) + Qabl_eff*ABperp(1,1))> (ABmid(1,1) - Qabl_eff*ABperp(1,1)) %Betrachtung der x-Werte der Punkte, der Punkt mit dem KLEINERN X-Wert ist der auf der linken Seite
+       if (ABmid(1,1) + Qabl_eff*ABperp(1,1))> (ABmid(1,1) - Qabl_eff*ABperp(1,1)) %Betrachtung der x-Werte der Punkte, der Punkt mit dem GROESSEREN X-Wert ist der auf der linken Seite
             D = ABmid + Qabl_eff*ABperp;
         else
             D = ABmid - Qabl_eff*ABperp;

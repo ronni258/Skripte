@@ -52,7 +52,7 @@ Ende=size(x,2);  %Endwert der Punkte
 minAbst = 2;  %minimale Anzahl der zu betrachtenden Punkte fuer eine Kurve, verhindert zu viele Kreise
 maxPoints = 2000; %maximale Anzahl der zu betrachtenden Punkte fuer eine Kurve, kann zur beschleunigung genutzt werden
 
-deltaR = 15; %Maximaler Abstand eines Punktes, auf einem Kreis, zu dem angenaehrten Kreis
+deltaR = 5; %Maximaler Abstand eines Punktes, auf einem Kreis, zu dem angenaehrten Kreis
 
 Ergebnis01=[];
 Ergebnis01_kM=[];
@@ -180,10 +180,13 @@ end
 %     failedFiles=[failedFiles;{'currentFile.mat'}];
 % continue        % anschließend übersprungen und es wird mit dem nächsten Datensatz weitergemacht
 % end
-%% Einfärbung der Strecke in gruene und rote Abschnitte
-hold on 
+%% Einfärbung der Strecke in gruene und rote Abschnitte 
 fig=figure;
+hold on
 set(fig,'Name',out)
+% figure  ('Name','Streckenverlauf');
+title ('Streckenverlauf Aufzeichnung: 2019-09-13-16-44-35')
+subtitle(' Unterteilung und angenäherte Kreise')
 color = 'r';
 plot(x(1,Start:1:Ergebnis01(4,1)),y(1,Start:1:Ergebnis01(4,1)),color,'LineWidth',3)
 for i=2:size(Ergebnis01,2)
@@ -195,6 +198,8 @@ for i=2:size(Ergebnis01,2)
     hold on
   plot(x(1,Ergebnis01(4,i-1):1:Ergebnis01(4,i)),y(1,Ergebnis01(4,i-1):1:Ergebnis01(4,i)),color,'LineWidth',3)
 end
+xlabel ('x-Koordinate')
+ylabel ('y-Koordinate')
 %% Kreiseinzeichnung
 
 for i=1:size(Ergebnis01,2)
@@ -284,8 +289,8 @@ end
 
 
 % Durchschnittliche Kruemmung aus Linie 01 und 02 (geglaettet)
-fas_kamera_bv1_LIN_1_2_HorKruemm_t00_average_t=(smooth(fas_kamera_bv1_LIN_02_HorKruemm_t00,1000)+smooth(fas_kamera_bv1_LIN_01_HorKruemm_t00,1000))/2;
-fas_kamera_bv1_LIN_1_2_HorKruemm_t00_average=fas_kamera_bv1_LIN_1_2_HorKruemm_t00_average_t'; %transponiert den Spaltenvektor wieder zum Zeilenvektor
+% fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00=(smooth(fas_kamera_bv1_LIN_02_HorKruemm_t00,1000)+smooth(fas_kamera_bv1_LIN_01_HorKruemm_t00,1000))/2;
+fas_kamera_bv1_LIN_1_2_HorKruemm_t00_average=fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00; %transponiert den Spaltenvektor wieder zum Zeilenvektor
 
 
 % Aufintegration der Kruemmung in den jeweiligen Bereichen, um zu gucken ob es sich um eine Links-(+)  oder Rechtskurve(-) handelt
@@ -423,7 +428,7 @@ save(out,'Ergebnis01_kM')
 
 
 %% Ausfuehrung Skript zur Einfärbung der Querbeschleunigungen
-% LOESCHMICH
+% Querbeschleunigung_einzeln
 
 
 % end

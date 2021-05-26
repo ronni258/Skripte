@@ -161,11 +161,16 @@ Ergebnis_Matrix_sortiert=Ergebnis_Matrix_sortiert(~all(Ergebnis_Matrix_sortiert 
 a=1; b=1; c=1; d=1; e=1; f=1; g=1; h=1; i=1; j=1; k=1; l=1; m=1; o=1; p=1; q=1;
 r=1; s=1; t=1; u=1; v=1; w=1; x=1; y=1; z=1; ii=1; jj=1; kk=1; ll=1; mm=1; oo=1;
 pp=1; qq=1; rr=1; ss=1; tt=1; uu=1; vv=1; ww=1; xx=1; yy=1; zz=1; aa=1; bb=1; cc=1;
-dd=1; ee=1;
+dd=1; ee=1; ff=1;
 
 % Unterteilung in Radienbereiche
 
 for n=1:size(Ergebnis_Rechtskurve,1)
+    if abs(abs(Ergebnis_Rechtskurve(n,2)))>20 && abs(Ergebnis_Rechtskurve(n,2))<=50
+       Ergebnis_Rechtskurve_0020_0050(ff,:)=Ergebnis_Rechtskurve(n,:);
+       ff=ff+1;
+    end        
+    
     if abs(abs(Ergebnis_Rechtskurve(n,2)))>50 && abs(Ergebnis_Rechtskurve(n,2))<=100
        Ergebnis_Rechtskurve_0050_0100(i,:)=Ergebnis_Rechtskurve(n,:);
        i=i+1;
@@ -212,7 +217,7 @@ for n=1:size(Ergebnis_Rechtskurve,1)
     end
     
     if abs(Ergebnis_Rechtskurve(n,2))>500 && abs(Ergebnis_Rechtskurve(n,2))<=550
-       Ergebnis_Rechtskurve_0500_0550(t,:)=Ergebnis_Rechtskurve(n,:);
+       Ergebnis_Rechtskurve_0500_0550(s,:)=Ergebnis_Rechtskurve(n,:);
        s=s+1;
     end
     
@@ -398,11 +403,16 @@ end
 a=1; b=1; c=1; d=1; e=1; f=1; g=1; h=1; i=1; j=1; k=1; l=1; m=1; o=1; p=1; q=1;
 r=1; s=1; t=1; u=1; v=1; w=1; x=1; y=1; z=1; ii=1; jj=1; kk=1; ll=1; mm=1; oo=1;
 pp=1; qq=1; rr=1; ss=1; tt=1; uu=1; vv=1; ww=1; xx=1; yy=1; zz=1; aa=1; bb=1; cc=1;
-dd=1; ee=1;
+dd=1; ee=1; ff=1;
 
 % Unterteilung in Radienbereiche
 
 for n=1:size(Ergebnis_Linkskurve,1)
+    if Ergebnis_Linkskurve(n,2)>20 && Ergebnis_Linkskurve(n,2)<=50
+       Ergebnis_Linkskurve_0020_0050(ff,:)=Ergebnis_Linkskurve(n,:);
+       ff=ff+1;
+    end
+    
     if Ergebnis_Linkskurve(n,2)>50 && Ergebnis_Linkskurve(n,2)<=100
        Ergebnis_Linkskurve_0050_0100(i,:)=Ergebnis_Linkskurve(n,:);
        i=i+1;
@@ -449,7 +459,7 @@ for n=1:size(Ergebnis_Linkskurve,1)
     end
     
     if Ergebnis_Linkskurve(n,2)>500 && Ergebnis_Linkskurve(n,2)<=550
-       Ergebnis_Linkskurve_0500_0550(t,:)=Ergebnis_Linkskurve(n,:);
+       Ergebnis_Linkskurve_0500_0550(s,:)=Ergebnis_Linkskurve(n,:);
        s=s+1;
     end
     
@@ -636,7 +646,7 @@ clear a aa b bb c cc d dd e ee f g h i ii j jj k kk l ll m mm o oo p pp q qq r r
 
 
 %% Datenvorbereitung fuer Balkendiagramm zur Haeufigkeitsverteilung der Kurvenradien
-
+Lk_0020_0050=size(Ergebnis_Linkskurve_0020_0050,1);
 Lk_0050_0100=size(Ergebnis_Linkskurve_0050_0100,1);
 Lk_0100_0150=size(Ergebnis_Linkskurve_0100_0150,1);
 Lk_0150_0200=size(Ergebnis_Linkskurve_0150_0200,1);
@@ -671,6 +681,7 @@ Lk_1800_1900=size(Ergebnis_Linkskurve_1800_1900,1);
 Lk_1900_2000=size(Ergebnis_Linkskurve_1900_2000,1);
 
 
+Rk_0020_0050=size(Ergebnis_Rechtskurve_0020_0050,1);
 Rk_0050_0100=size(Ergebnis_Rechtskurve_0050_0100,1);
 Rk_0100_0150=size(Ergebnis_Rechtskurve_0100_0150,1);
 Rk_0150_0200=size(Ergebnis_Rechtskurve_0150_0200,1);

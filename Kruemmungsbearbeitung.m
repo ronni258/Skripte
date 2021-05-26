@@ -70,7 +70,7 @@ end
     fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00=[];
 for n=1:anzahl
 if isnan(Data.fas_kamera_bv1_LIN_01_HorKruemm_t00(1,n)) && isnan(Data.fas_kamera_bv1_LIN_02_HorKruemm_t00(1,n))
-    fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1,n)=NaN; %%%%%% Name muss im Hauptskript noch angepasst werden
+    fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1,n)=NaN; 
 
 elseif isnan(Data.fas_kamera_bv1_LIN_01_HorKruemm_t00(1,n)) && ~isnan(Data.fas_kamera_bv1_LIN_02_HorKruemm_t00(1,n))
     fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1,n)=Data.fas_kamera_bv1_LIN_02_HorKruemm_t00(1,n);
@@ -101,6 +101,7 @@ Extrema=sortrows(Extrema,2);
 %worden sind als nicht relevant
 %Indikator ob es sich um verwendbares Extrema handelt, ohne Fehler durch nicht erkannte Fahrbahnmarkierungen (0= fehlerhaft, 1= verwendbar)
 Bereich=50; %Bereich in dem um ein Extrema herum fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00 nicht "NaN" werden darf, da sonst nicht verwendbar
+%dadurch wird verhindert, dass schlagartig steigende oder fallende Krümmungswerte die aufgrund von fehlender Markierungen entstanden sind als Extrema betrachtet werden können 
 for n=1:size(Extrema,1)
    
     if Extrema(n,2)>Bereich && Extrema(n,2)<anzahl-Bereich
@@ -149,23 +150,23 @@ for n=1:size(Extrema,1)
  try
     if n==1
      if Extrema(n,1)>0
-        Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1:Extrema(n,2))<=Tb,1,'last'); %dran denken, Wert schneidet nicht immer die x-Achse also anstatt der <0, >0 Annahmebereich bspw.(-0,0001:0,0001) angeben
+        Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1:Extrema(n,2))<=Tb,1,'last')+1; %dran denken, Wert schneidet nicht immer die x-Achse also anstatt der <0, >0 Annahmebereich bspw.(-0,0001:0,0001) angeben
      else
-        Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1:Extrema(n,2))>=-Tb,1,'last');
+        Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(1:Extrema(n,2))>=-Tb,1,'last')+1; %letze "+1" dient dazu den Bereich zu verkleinern (beginnt einen Punkt später) damit wirklich nur Messpunkte verwendet werden deren Krümmung <=0.0001 ist
      end
         
     
     elseif n<size(Extrema,1)&& n>1
         if Extrema(n,1)>0
-            Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n-1,2):Extrema(n,2))<=Tb,1,'last')+Extrema(n-1,2)-1; 
+            Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n-1,2):Extrema(n,2))<=Tb,1,'last')+Extrema(n-1,2)-1+1; 
         else
-            Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n-1,2):Extrema(n,2))>=-Tb,1,'last')+Extrema(n-1,2)-1;
+            Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n-1,2):Extrema(n,2))>=-Tb,1,'last')+Extrema(n-1,2)-1+1;
         end
     elseif n>1
         if Extrema(n,1)>0
-            Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n-1,2):Extrema(n,2))<=Tb,1,'last')+Extrema(n-1,2)-1; 
+            Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n-1,2):Extrema(n,2))<=Tb,1,'last')+Extrema(n-1,2)-1+1; 
         else
-            Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n-1,2):Extrema(n,2))>=-Tb,1,'last')+Extrema(n-1,2)-1;
+            Extrema(n,5)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n-1,2):Extrema(n,2))>=-Tb,1,'last')+Extrema(n-1,2)-1+1;
         end
     end
  catch 
@@ -186,23 +187,23 @@ for n=1:size(Extrema,1)
  try
      if n==1
         if  Extrema(n,1)>0
-            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):Extrema(n+1,2))<=Tb,1,'first')+Extrema(1,2)-1;
+            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):Extrema(n+1,2))<=Tb,1,'first')+Extrema(1,2)-1-1;%letze "-1" dient dazu den Bereich zu verkleinern (endet einen Punkt früher) damit wirklich nur Messpunkte verwendet werden deren Krümmung <=0.0001 ist
         else
-            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):Extrema(n+1,2))>=-Tb,1,'first')+Extrema(1,2)-1;
+            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):Extrema(n+1,2))>=-Tb,1,'first')+Extrema(1,2)-1-1;
         end   
      
          
     elseif n<size(Extrema,1)
         if Extrema(n,1)>0
-            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):Extrema(n+1,2))<=Tb,1,'first')+Extrema(n,2)-1;
+            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):Extrema(n+1,2))<=Tb,1,'first')+Extrema(n,2)-1-1;
         else
-            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):Extrema(n+1,2))>=-Tb,1,'first')+Extrema(n,2)-1;
+            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):Extrema(n+1,2))>=-Tb,1,'first')+Extrema(n,2)-1-1;
         end
     else
         if Extrema(n,1)>0
-            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):anzahl)<=Tb,1,'first')+Extrema(n,2)-1;
+            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):anzahl)<=Tb,1,'first')+Extrema(n,2)-1-1;
         else
-            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):anzahl)>=-Tb,1,'first')+Extrema(n,2)-1;
+            Extrema(n,7)=find(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2):anzahl)>=-Tb,1,'first')+Extrema(n,2)-1-1;
         end
     end
  catch 

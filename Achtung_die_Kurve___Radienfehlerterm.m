@@ -469,7 +469,7 @@ save(out,'Ergebnis01_kM')
 
 
 %% Ausfuehrung Skript zur Einfärbung der Querbeschleunigungen
-% LOESCHMICH
+% Querbeschleunigung
 
 
 end

@@ -43,15 +43,6 @@ L=[];
 R=[];
 K=[];
 [L,R,K]=curvature(XY_qab);
-% 
-% for i=2:size(XY_qab,1)
-% if XY_qab(i,1)>XY_qab(i-1,1)
-%     if
-%     
-%     
-%     
-% end
-% end
 
 
 

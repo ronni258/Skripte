@@ -67,6 +67,8 @@ x = xEast(1,1:int:anzahl);
 hold on 
 fig=figure;
 set(fig,'Name',out)
+title ('Streckenverlauf')
+subtitle('mit markierten Kurven')
 color = 'k';
 plot(x(1,1:1:anzahl),y(1,1:1:anzahl),color,'LineWidth',2)
 for n=1:size(Ergebnis_Kr,2)
@@ -102,7 +104,10 @@ end
 %% stellt auf der Z-Achse die Krümmung dar
 plot3(xEast(1,1:int:anzahl),yNorth(1,1:int:anzahl),1:int:anzahl,'MarkerSize',2,'MarkerFaceColor',[1 0 0],'Color','black');
 % plot3(xEast(1,1:int:anzahl),yNorth(1,1:int:anzahl),Lenkradwinkel(1:int:anzahl),'MarkerSize',2,'MarkerFaceColor',[1 0 0],'Color','black');
-
+xlabel ('x-Koordinate')
+ylabel ('y-Koordinate')
+zlabel('Messpunkte')
+legend('Streckenverlauf','Linkskurve','Rechtskurve')
 daspect([1 1 100000])
 pbaspect([16 9 9])
 hold off

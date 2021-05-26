@@ -545,11 +545,6 @@ Nachbereitung_Kruemmung
 Auswertung_Kruemmung
 
 %% Legende Ergebnis_Kr
-% Bis 76. beziehen sich die Werte fuer die Punkte bei 0.2, 0.4, 0.6, und
-% 0.8 einer Kurve auf die Anzahl der Messpunkte (sind also
-% geschwindigkeitsabhaengig, da mit 100Hz gemessen wird.
-% Ab 79. werden die gleichen Punkte anhand der zurueckgelgten Distanz
-% innerhalt einer Kurve gemessen, somit sind die Werte streckenabhaengig
 
 % 01.   Messpunkt des minimalen Radius/maximalen Kruemmung der Gesamtkurve
 % 02.   minimaler Radius der Gesamtkurve [m] (kleinster Radius definiert die Kurve)  
@@ -713,8 +708,8 @@ Auswertung_Kruemmung
 % 160.   0
 % 161.   0
 % 162.   realtive Kurvendistanz bei Kurvenbeginn (immer 0)       [m]
-% 163.   realtive Kurvendistanz 0.2 der Kurve (20% der Distanz)  [m]
-% 164.   realtive Kurvendistanz 0.4 der Kurve (40% der Distanz)  [m]
-% 165.   realtive Kurvendistanz 0.6 der Kurve (60% der Distanz)  [m]
-% 166.   realtive Kurvendistanz 0.8 der Kurve (80% der Distanz)  [m]
+% 163.   realtive Kurvendistanz 0.1 der Kurve (10% der Distanz)  [m]
+% 164.   realtive Kurvendistanz 0.3 der Kurve (30% der Distanz)  [m]
+% 165.   realtive Kurvendistanz 0.5 der Kurve (50% der Distanz)  [m]
+% 166.   realtive Kurvendistanz 0.7 der Kurve (70% der Distanz)  [m]
 % 167.   realtive Kurvendistanz bei Kurvenende
