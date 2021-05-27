@@ -478,7 +478,7 @@ hold off
 %markiert Extrema auf Durchfahrt
 scatter(xEast(Extrema(:,2)),yNorth(Extrema(:,2)),20,'blue','filled')
 %markiert gueltige Extrema auf Kruemmungsverlauf
-scatter(Extrema_final(:,1),1./(Extrema_final(:,2)),20,'blue','filled')
+scatter(Extrema_final(:,1),1./(Extrema_final(:,2)),100,'blue','filled')
 
 %sortiert die Peaks in eine Matrix
 Extrema=[pks_max -pks_min; locs_max locs_min]';

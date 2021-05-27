@@ -11,7 +11,7 @@ try
     Data   = load(fullfile('D:\Messdaten\040_Volkswagen_Passat_WOB_OQ_616\Landstraße', FileList(iFile).name));
     currentFile=FileList(iFile);%%%%%%%%%%%%%%TEST ob der Name bei den FailedFiles auftaucht
     %% Definition von variablen Randbedingungen
-FileList(iFile)
+FileList(iFile) %dient als Veranschaulichung, dass das Skript bei Durchführung Fortschritte macht, da der jeweilige gerade eingelesen Dateinname im Command Window erscheint
 
 % Schrittweite zwischen zwei zu betrachtenden Punkten
 
@@ -28,7 +28,6 @@ int=1;
 %beginnend bei 1 mit einer Schrittweite von 10 Punkten --> der letzte Punkt
 %waere also bei 9001 das * 10 = 90010 obwohl nur 90002 Punkte vorhanden
 %sind
-
 anzahl=fix(size(Data.fas_kamera_bv1_LIN_01_AbstandY_t00,2)/(int*10))*(int*10);
 
 

@@ -126,8 +126,8 @@ for n=1:size(Ergebnis_Matrix_sortiert,1)
         Ergebnis_Matrix_sortiert(n,:)=0;
     end
     
-    %loescht alle Abschnitte die kuerzer als 3 Meter sind
-    if  Ergebnis_Matrix_sortiert(n,3) < 3
+    %loescht alle Abschnitte die kuerzer als 5 Meter sind
+    if  Ergebnis_Matrix_sortiert(n,3) < 5
         Ergebnis_Matrix_sortiert(n,:)=0;     
     end
     
@@ -715,5 +715,93 @@ Rk_1700_1800=size(Ergebnis_Rechtskurve_1700_1800,1);
 Rk_1800_1900=size(Ergebnis_Rechtskurve_1800_1900,1);
 Rk_1900_2000=size(Ergebnis_Rechtskurve_1900_2000,1);
 
+%Speichert alle Links- und Rechtskurven in einem Struct, um bei der
+%Auswertung mithilfe einer for Schleife alle Werte parallel betrachten
+%zu können
+Lk=[];
+Rk=[];
+Lk(1).a =Ergebnis_Linkskurve_0020_0050;
+Lk(2).a =Ergebnis_Linkskurve_0050_0100;
+Lk(3).a =Ergebnis_Linkskurve_0100_0150;
+Lk(4).a =Ergebnis_Linkskurve_0150_0200;
+Lk(5).a =Ergebnis_Linkskurve_0200_0250;
+Lk(6).a =Ergebnis_Linkskurve_0250_0300;
+Lk(7).a =Ergebnis_Linkskurve_0300_0350;
+Lk(8).a =Ergebnis_Linkskurve_0350_0400;
+Lk(9).a =Ergebnis_Linkskurve_0400_0450;
+Lk(10).a =Ergebnis_Linkskurve_0450_0500;
+Lk(11).a =Ergebnis_Linkskurve_0500_0550;
+Lk(12).a =Ergebnis_Linkskurve_0550_0600;
+Lk(13).a =Ergebnis_Linkskurve_0600_0650;
+Lk(14).a =Ergebnis_Linkskurve_0650_0700;
+Lk(15).a =Ergebnis_Linkskurve_0700_0750;
+Lk(16).a =Ergebnis_Linkskurve_0750_0800;
+Lk(17).a =Ergebnis_Linkskurve_0800_0850;
+Lk(18).a =Ergebnis_Linkskurve_0850_0900;
+Lk(19).a =Ergebnis_Linkskurve_0900_0950;
+Lk(20).a =Ergebnis_Linkskurve_0950_1000;
+Lk(21).a =Ergebnis_Linkskurve_1000_1050;
+Lk(22).a =Ergebnis_Linkskurve_1050_1100;
+Lk(23).a =Ergebnis_Linkskurve_1100_1150;
+Lk(24).a =Ergebnis_Linkskurve_1150_1200;
+Lk(25).a =Ergebnis_Linkskurve_1200_1250;
+Lk(26).a =Ergebnis_Linkskurve_1250_1300;
+Lk(27).a =Ergebnis_Linkskurve_1300_1400;
+Lk(28).a =Ergebnis_Linkskurve_1400_1500;
+Lk(29).a =Ergebnis_Linkskurve_1500_1600;
+Lk(30).a =Ergebnis_Linkskurve_1600_1700;
+Lk(31).a =Ergebnis_Linkskurve_1700_1800;
+Lk(32).a =Ergebnis_Linkskurve_1800_1900;
+Lk(33).a =Ergebnis_Linkskurve_1900_2000;
+Lk(34).a =Ergebnis_Linkskurve_2000_2200;
+Lk(35).a =Ergebnis_Linkskurve_2200_2400;
+Lk(36).a =Ergebnis_Linkskurve_2400_2600;
+Lk(37).a =Ergebnis_Linkskurve_2600_2800;
+Lk(38).a =Ergebnis_Linkskurve_2800_3000;
+Lk(39).a =Ergebnis_Linkskurve_3000_3500;
+Lk(40).a =Ergebnis_Linkskurve_3500_4000;
+Lk(41).a =Ergebnis_Linkskurve_4000_4500;
+Lk(42).a =Ergebnis_Linkskurve_4500_5000;
 
-
+Rk(1).a =Ergebnis_Rechtskurve_0020_0050;
+Rk(2).a =Ergebnis_Rechtskurve_0050_0100;
+Rk(3).a =Ergebnis_Rechtskurve_0100_0150;
+Rk(4).a =Ergebnis_Rechtskurve_0150_0200;
+Rk(5).a =Ergebnis_Rechtskurve_0200_0250;
+Rk(6).a =Ergebnis_Rechtskurve_0250_0300;
+Rk(7).a =Ergebnis_Rechtskurve_0300_0350;
+Rk(8).a =Ergebnis_Rechtskurve_0350_0400;
+Rk(9).a =Ergebnis_Rechtskurve_0400_0450;
+Rk(10).a =Ergebnis_Rechtskurve_0450_0500;
+Rk(11).a =Ergebnis_Rechtskurve_0500_0550;
+Rk(12).a =Ergebnis_Rechtskurve_0550_0600;
+Rk(13).a =Ergebnis_Rechtskurve_0600_0650;
+Rk(14).a =Ergebnis_Rechtskurve_0650_0700;
+Rk(15).a =Ergebnis_Rechtskurve_0700_0750;
+Rk(16).a =Ergebnis_Rechtskurve_0750_0800;
+Rk(17).a =Ergebnis_Rechtskurve_0800_0850;
+Rk(18).a =Ergebnis_Rechtskurve_0850_0900;
+Rk(19).a =Ergebnis_Rechtskurve_0900_0950;
+Rk(20).a =Ergebnis_Rechtskurve_0950_1000;
+Rk(21).a =Ergebnis_Rechtskurve_1000_1050;
+Rk(22).a =Ergebnis_Rechtskurve_1050_1100;
+Rk(23).a =Ergebnis_Rechtskurve_1100_1150;
+Rk(24).a =Ergebnis_Rechtskurve_1150_1200;
+Rk(25).a =Ergebnis_Rechtskurve_1200_1250;
+Rk(26).a =Ergebnis_Rechtskurve_1250_1300;
+Rk(27).a =Ergebnis_Rechtskurve_1300_1400;
+Rk(28).a =Ergebnis_Rechtskurve_1400_1500;
+Rk(29).a =Ergebnis_Rechtskurve_1500_1600;
+Rk(30).a =Ergebnis_Rechtskurve_1600_1700;
+Rk(31).a =Ergebnis_Rechtskurve_1700_1800;
+Rk(32).a =Ergebnis_Rechtskurve_1800_1900;
+Rk(33).a =Ergebnis_Rechtskurve_1900_2000;
+Rk(34).a =Ergebnis_Rechtskurve_2000_2200;
+Rk(35).a =Ergebnis_Rechtskurve_2200_2400;
+Rk(36).a =Ergebnis_Rechtskurve_2400_2600;
+Rk(37).a =Ergebnis_Rechtskurve_2600_2800;
+Rk(38).a =Ergebnis_Rechtskurve_2800_3000;
+Rk(39).a =Ergebnis_Rechtskurve_3000_3500;
+Rk(40).a =Ergebnis_Rechtskurve_3500_4000;
+Rk(41).a =Ergebnis_Rechtskurve_4000_4500;
+Rk(42).a =Ergebnis_Rechtskurve_4500_5000;

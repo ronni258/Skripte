@@ -327,33 +327,35 @@ hold off
 
 %alle Einzelpunkte der Kurven eines Radiusbereiches werden zusammengeführt,
 %um daraus Punktewolken erstellen zu können
-ZsmKr_ypp2_Rk=[];
 ZsmKr_ypp_Rk=[];
-ZsmKr_Qab2_Rk=[];
 ZsmKr_Qab_Rk=[];
-ZsmKr_ypp2_Lk=[];
 ZsmKr_ypp_Lk=[];
-ZsmKr_Qab2_Lk=[];
 ZsmKr_Qab_Lk=[];
-for n=1:size(Ergebnis_Rechtskurve_0400_0450,1)
+for n=1:size(Ergebnis_Rechtskurve_0850_0900,1)
 %Querbeschleunigung über Krümmung
-ZsmKr_ypp2_Rk(1,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Rechtskurve_0400_0450(n,46:49) Ergebnis_Rechtskurve_0400_0450(n,128:134)];
-ZsmKr_ypp2_Rk(2,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Rechtskurve_0400_0450(n,57:60) Ergebnis_Rechtskurve_0400_0450(n,139:145)];
-ZsmKr_ypp2_Lk(1,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Linkskurve_0400_0450(n,46:49) Ergebnis_Linkskurve_0400_0450(n,128:134)];
-ZsmKr_ypp2_Lk(2,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Linkskurve_0400_0450(n,57:60) Ergebnis_Linkskurve_0400_0450(n,139:145)];
+ZsmKr_ypp_Rk(1,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Rechtskurve_0850_0900(n,46:49) Ergebnis_Rechtskurve_0850_0900(n,128:134)];
+ZsmKr_ypp_Rk(2,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Rechtskurve_0850_0900(n,57:60) Ergebnis_Rechtskurve_0850_0900(n,139:145)];
 
 %normierte Querablage über Krümmung
-ZsmKr_Qab2_Rk(1,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Rechtskurve_0400_0450(n,46:49) Ergebnis_Rechtskurve_0400_0450(n,128:134)];
-ZsmKr_Qab2_Rk(2,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Rechtskurve_0400_0450(n,35:38) Ergebnis_Rechtskurve_0400_0450(n,117:123)];
-ZsmKr_Qab2_Lk(1,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Linkskurve_0400_0450(n,46:49) Ergebnis_Linkskurve_0400_0450(n,128:134)];
-ZsmKr_Qab2_Lk(2,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Linkskurve_0400_0450(n,35:38) Ergebnis_Linkskurve_0400_0450(n,117:123)];
+ZsmKr_Qab_Rk(1,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Rechtskurve_0850_0900(n,46:49) Ergebnis_Rechtskurve_0850_0900(n,128:134)];
+ZsmKr_Qab_Rk(2,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Rechtskurve_0850_0900(n,35:38) Ergebnis_Rechtskurve_0850_0900(n,117:123)];
+
+end
+for n=1:size(Ergebnis_Linkskurve_0850_0900,1)
+%normierte Querablage über Krümmung
+ZsmKr_Qab_Lk(1,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Linkskurve_0850_0900(n,46:49) Ergebnis_Linkskurve_0850_0900(n,128:134)];
+ZsmKr_Qab_Lk(2,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Linkskurve_0850_0900(n,35:38) Ergebnis_Linkskurve_0850_0900(n,117:123)];
+
+%Querbeschleunigung über Krümmung
+ZsmKr_ypp_Lk(1,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Linkskurve_0850_0900(n,46:49) Ergebnis_Linkskurve_0850_0900(n,128:134)];
+ZsmKr_ypp_Lk(2,n/n+n*11-11:n/n+n*11-1)=[Ergebnis_Linkskurve_0850_0900(n,57:60) Ergebnis_Linkskurve_0850_0900(n,139:145)];
 
 end
 % Aufbereitung damit die Daten als Punktewolke geplottet werden können
-ZsmKr_ypp_Rk=ZsmKr_ypp2_Rk';
-ZsmKr_ypp_Lk=ZsmKr_ypp2_Lk';
-ZsmKr_Qab_Rk=ZsmKr_Qab2_Rk';
-ZsmKr_Qab_Lk=ZsmKr_Qab2_Lk';
+ZsmKr_ypp_Rk=ZsmKr_ypp_Rk';
+ZsmKr_ypp_Lk=ZsmKr_ypp_Lk';
+ZsmKr_Qab_Rk=ZsmKr_Qab_Rk';
+ZsmKr_Qab_Lk=ZsmKr_Qab_Lk';
 
 % ersetzt alle Reihen in denen die Krümmung NaN ist mit 0 als Vorbereitung
 % um diese im nächsten Schritt zu löschen. Die NaN Werte verhindern, dass
@@ -362,11 +364,7 @@ for n=1:size(ZsmKr_ypp_Rk,1)
     if isnan(ZsmKr_ypp_Rk(n,1))
        ZsmKr_ypp_Rk(n,:)=0;
     end
-    
-    if isnan(ZsmKr_ypp_Lk(n,1))
-       ZsmKr_ypp_Lk(n,:)=0;
-    end    
- 
+      
      if isnan(ZsmKr_Qab_Rk(n,1))
        ZsmKr_Qab_Rk(n,:)=0;
      end 
@@ -374,15 +372,20 @@ for n=1:size(ZsmKr_ypp_Rk,1)
      if isnan(ZsmKr_Qab_Rk(n,2))
        ZsmKr_Qab_Rk(n,:)=0;
      end     
-     
+      
+end
+for n=1:size(ZsmKr_ypp_Lk,1)  
+    if isnan(ZsmKr_ypp_Lk(n,1))
+       ZsmKr_ypp_Lk(n,:)=0;
+    end   
+    
      if isnan(ZsmKr_Qab_Lk(n,1))
        ZsmKr_Qab_Lk(n,:)=0;
-     end    
-
+     end 
+     
      if isnan(ZsmKr_Qab_Lk(n,2))
        ZsmKr_Qab_Lk(n,:)=0;
-     end       
-     
+     end     
 end
 
 % löscht alle Reihen die nur aus 0en bestehen

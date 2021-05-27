@@ -106,7 +106,7 @@ for n=1:size(Extrema,1)
    
     if Extrema(n,2)>Bereich && Extrema(n,2)<anzahl-Bereich
             if isnan(mean(fas_kamera_bv1_LIN_01_02_HorKruemm_average_t00(Extrema(n,2)-Bereich:Extrema(n,2)+Bereich)))
-                Extrema(n,3)=0; %setzt Indokator auf "0" wenn nicht verwendbar
+                Extrema(n,3)=0; %setzt Indikator auf "0" wenn nicht verwendbar
             else
                 Extrema(n,3)=1;
             end
